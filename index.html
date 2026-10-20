@@ -1,54 +1,176 @@
-<link rel="stylesheet" href="style.css?v=3">
-<main class="main-content">
-  <!-- Banner -->
-  <section class="hero-section">
-    <h1 id="heroTitle">ئاستێ خۆ بلند بکە و زانیاریان کۆم بکە ب یارییا MitanXP</h1>
-    <p id="heroSub">ئۆنلاین یاریێ بکه، بەرنگارییا هەڤالێن خۆ بکه و پلێن بەرز بدەستڤە بئینە.</p>
-    
-    <div class="hero-actions">
-      <button id="btnQuickPlay" class="btn-primary">⚡ یارییا خێرا (۱۰ پرسیار)</button>
-      <button id="btnPuzzleGame" class="btn-primary alt">🧩 یارییا پڕژلا وێنەی (Puzzle)</button>
-      <button id="btnCreateRoom" class="btn-secondary">➕ پرسیارێن خۆ چێبکە (ژوورا نوو)</button>
+[10/20/2026 6:02 AM] ❤️‍🩹🖤🐯: <!-- Main Content -->
+<main class="main-layout">
+  <!-- Top Banner Bar -->
+  <header class="top-header">
+    <div class="breadcrumb">MitanXP / <span>IT Learning • Gaming</span></div>
+    <div class="top-actions">
+      <button id="btnLangToggle" class="lang-btn">Kurdish / EN</button>
+      <span class="icon-btn">🔔</span>
+      <span class="icon-btn">☀️</span>
     </div>
-  </section>
+  </header>
 
-  <!-- Custom Quiz / Room Creation -->
-  <section id="customQuizSection" class="card hidden">
-    <h2>📝 پرسیاران بۆ هەڤالێن خۆ دانە</h2>
-    <p>پرسیار و بەرسڤێن خۆ بنڤێسە دا هەڤالێن تە بەشداریێ تێدا بکەن:</p>
-    <div class="form-group">
-      <input type="text" id="customQuestion" placeholder="پرسیارا خۆ بنڤێسە...">
-      <input type="text" id="optA" placeholder="بەرسڤا A">
-      <input type="text" id="optB" placeholder="بەرسڤا B">
-      <input type="text" id="optC" placeholder="بەرسڤا C">
-      <select id="correctOpt">
-        <option value="0">بەرسڤا ڕاست: A</option>
-        <option value="1">بەرسڤا ڕاست: B</option>
-        <option value="2">بەرسڤا ڕاست: C</option>
-      </select>
-      <button id="btnAddQuestion" class="btn-primary">زێدەکرنا پرسیارێ</button>
-    </div>
-    <div id="roomCodeDisplay" class="room-code-box hidden">
-      <span>کۆدێ ژوورا تە: </span><strong id="generatedCode">----</strong>
-    </div>
-  </section>
+  <div class="content-grid">
+    <!-- Left/Middle Section -->
+    <div class="center-content">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1>Mitan<span>XP</span></h1>
+          <p class="sub-title">IT Learning • Gaming</p>
+          <h3>ئاستێ خۆ بلند بکه و زانیاریان کۆم بکه ب یاریا MitanXP</h3>
+          <p class="eng-sub">Improve Your IT Skills</p>
+          <button id="btnStartGame" class="btn-play">▶ دەستپێکردنی یاری / Start Game</button>
+        </div>
+        <div class="hero-img">
+          <div class="mxp-laptop-card">
+            <span>⚡ MXP ⚡</span>
+            <p>IT QUIZ</p>
+          </div>
+        </div>
+      </div>
 
-  <!-- Quiz Game Area -->
-  <section id="quizArea" class="card hidden">
-    <div class="quiz-header">
-      <span id="qCount">پرسیارا 1/10</span>
-      <span id="timer">⏱️ 15s</span>
-    </div>
-    <img id="qImage" src="" alt="Question Image" class="q-image hidden">
-    <h3 id="questionText">تێکستا پرسیارێ...</h3>
-    <div id="optionsContainer" class="options-grid"></div>
-  </section>
+      <!-- Categories -->
+      <section class="categories-section">
+        <div class="section-header">
+          <h2>🗂️ بابەتەکان / <span>Categories</span></h2>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-card blue">
+            <span class="cat-icon">&lt;/&gt;</span>
+            <h4>بەبەرنامەسازی</h4>
+            <p>Programming</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card teal">
+            <span class="cat-icon">🌐</span>
+            <h4>تۆڕ</h4>
+            <p>Networking</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card purple">
+            <span class="cat-icon">💾</span>
+            <h4>بنکەدراوە</h4>
+            <p>Database</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card yellow">
+            <span class="cat-icon">🔒</span>
+            <h4>پاراستنا سایبەری</h4>
+            <p>Cybersecurity</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card orange">
+            <span class="cat-icon">🔲</span>
+            <h4>پارچەکانی کۆمپیوتەر</h4>
+            <p>Hardware</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card cyan">
+            <span class="cat-icon">🪟</span>
+            <h4>سیستەمێن کارپێکر دنی</h4>
+            <p>Operating Systems</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card green">
+            <span class="cat-icon">🌍</span>
+            <h4>گەشەپێدانا Web</h4>
+            <p>Web Development</p>
+            <span class="arrow">›</span>
+          </div>
+          <div class="cat-card pink">
+            <span class="cat-icon">💡</span>
+            <h4>زانیاریێن گشتی یێن IT</h4>
+            <p>General IT</p>
+            <span class="arrow">›</span>
+          </div>
+        </div>
+      </section>
 
-  <!-- Puzzle Game Area -->
-  <section id="puzzleArea" class="card hidden">
-    <h2>🧩 یارییا ڕێکخستنا وێنەی (Puzzle)</h2>
-    <p>پارچێن وێنەی ب دروستی ڕێکبێخە د کێمترین دەم دا!</p>
-    <div id="puzzleBoard" class="puzzle-board"></div>
-    <div id="puzzleTimer">دەمی بەرکەفتی: <span id="pTime">0</span> چەرخ</div>
-  </section>
-</main><script src="app.js?v=2"></script>
+      <!-- Game Modes -->
+      <section class="modes-section">
+        <div class="section-header">
+          <h2>🎮 شێوازەکانی یاری / <span>Game Modes</span></h2>
+        </div>
+        <div class="modes-row">
+          <div class="mode-box">
+            <span class="m-icon">🎯</span>
+            <div>
+              <h5>Classic Quiz</h5>
+              <p>پرسیارێن کلاسیكی</p>
+            </div>
+          </div>
+          <div class="mode-box">
+            <span class="m-icon">⏱️</span>
+            <div>
+              <h5>Time Attack</h5>
+              <p>کاتیوا</p>
+            </div>
+          </div>
+          <div class="mode-box">
+            <span class="m-icon">🏆</span>
+            <div>
+              <h5>Challenge</h5>
+              <p>پێش دەست</p>
+            </div>
+          </div>
+          <div class="mode-box">
+            <span class="m-icon">🎲</span>
+            <div>
+              <h5>Random Quiz</h5>
+              <p>پرسیارێن هەوادار</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+[10/20/2026 6:02 AM] ❤️‍🩹🖤🐯: <!-- Right Panel (Profile & Stats) -->
+    <aside class="right-panel">
+      <!-- Profile Card -->
+      <div class="panel-card profile-card">
+        <div class="profile-header">
+          <div class="avatar">👨‍💻</div>
+          <div>
+            <h3>Mitanxp 👑</h3>
+            <p class="role">Student</p>
+          </div>
+        </div>
+        <div class="xp-bar-container">
+          <div class="xp-text"><span>Level 3</span> <span>120 / 300 XP</span></div>
+          <div class="xp-bar"><div class="xp-fill" style="width: 40%;"></div></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="s-icon">⭐</span>
+            <div><p>Total Score</p><h4>1200</h4><small>کۆی خاڵ</small></div>
+          </div>
+          <div class="stat-box">
+            <span class="s-icon green">✅</span>
+            <div><p>Correct</p><h4>18</h4><small>وەڵامی دروست</small></div>
+          </div>
+          <div class="stat-box">
+            <span class="s-icon red">❌</span>
+            <div><p>Wrong</p><h4>7</h4><small>وەڵامی هەڵە</small></div>
+          </div>
+          <div class="stat-box">
+            <span class="s-icon blue">🎮</span>
+            <div><p>Played</p><h4>3</h4><small>یاری کراوە</small></div>
+          </div>
+        </div>
+        <p class="quote">"The best way to predict the future is to create it." <span>— Mitanxp</span></p>
+      </div>
+
+      <!-- Leaderboard Mini -->
+      <div class="panel-card leaderboard-card">
+        <h4>🏆 خشتەی پێشەنگان / <span>Leaderboard</span></h4>
+        <ul class="lb-list">
+          <li class="gold"><span class="rank">1</span> <span class="name">Mitanxp</span> <span class="pts">1200</span></li>
+          <li><span class="rank">2</span> <span class="name">Rojin</span> <span class="pts">980</span></li>
+          <li><span class="rank">3</span> <span class="name">Hawre</span> <span class="pts">860</span></li>
+          <li><span class="rank">4</span> <span class="name">Zana</span> <span class="pts">740</span></li>
+          <li><span class="rank">5</span> <span class="name">Diyar</span> <span class="pts">690</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
