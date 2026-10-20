@@ -1,15 +1,22 @@
+
 {
-  "name": "MitanXP IT Platform",
+  "id": "./index.html",
+  "name": "MitanXP - IT Educational Platform",
   "short_name": "MitanXP",
-  "start_url": "index.html",
+  "description": "Learn IT, play quizzes, solve puzzles and collect knowledge with MitanXP.",
+  "lang": "en",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0a1128",
-  "theme_color": "#ffc107",
+  "orientation": "portrait-primary",
+  "background_color": "#070d1e",
+  "theme_color": "#070d1e",
   "icons": [
     {
-      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=192",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
