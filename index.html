@@ -1,54 +1,161 @@
-<link rel="stylesheet" href="style.css?v=10">
-<!-- Hero / Intro Banner -->
-<section class="hero-section">
-  <h1 id="heroTitle">ئاستێ خۆ بلند بکە و زانیاریان کۆم بکە ب یاریا MitanXP</h1>
-  <p id="heroSub">Level up your IT skills and gain knowledge with MitanXP Platform</p>
-  
-  <div class="hero-actions">
-    <button id="btnQuickPlay" class="btn-primary">⚡ یاریا پرسیارێن IT (10 IT Questions)</button>
-    <button id="btnPuzzleGame" class="btn-primary alt">🧩 یاریا پۆزلا وێنەیی (IT Image Puzzle)</button>
-    <button id="btnCreateRoom" class="btn-secondary">➕ پرسیارێن خۆ چێکە (Create Room)</button>
-  </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MitanXP - IT Educational Platform</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<!-- Custom Quiz / Room Creation -->
-<section id="customQuizSection" class="card hidden">
-  <h2>✍️ پرسیاران بۆ هەڤالێن خۆ دانە / Add Custom Questions</h2>
-  <p>پرسیار و وەڵامێن خۆ بنڤێسە دا هەڤالێن تە بەشداریێ تێدا بکەن:</p>
-  <div class="form-group">
-    <input type="text" id="customQuestion" placeholder="پرسیارا خۆ بنڤێسە... / Enter Question...">
-    <input type="text" id="optA" placeholder="وەڵاما A / Option A">
-    <input type="text" id="optB" placeholder="وەڵاما B / Option B">
-    <input type="text" id="optC" placeholder="وەڵاما C / Option C">
-    <select id="correctOpt">
-      <option value="0">وەڵاما ڕاست: A / Correct: A</option>
-      <option value="1">وەڵاما ڕاست: B / Correct: B</option>
-      <option value="2">وەڵاما ڕاست: C / Correct: C</option>
-    </select>
-    <button id="btnAddQuestion" class="btn-primary">تۆمارکرنا پرسیارێ / Save Question</button>
-  </div>
-  <div id="roomCodeDisplay" class="room-code-box hidden">
-    <span>کۆدێ ژوورا تە / Room Code: <strong id="generatedCode">----</strong></span>
-  </div>
-</section>
+<div class="app-container">
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="logo-section">
+            <div class="logo-badge">MXP</div>
+            <div>
+                <h1 class="title-en">MitanXP Platform</h1>
+                <p class="title-ku">پەیمانگەها میتان - بەشێ تەکنەلۆجیا زانیاریان (IT)</p>
+            </div>
+        </div>
+        <div class="slogan-box">
+            <p class="slogan-en">"Raise your level and collect knowledge with MitanXP game"</p>
+            <p class="slogan-ku">"ئاستێ خۆ بلند بکە و زانیاریان کۆم بکە ب یاریا MitanXP"</p>
+        </div>
+    </header>
 
-<!-- Quiz Game Area -->
-<section id="quizArea" class="card hidden">
-  <div class="quiz-header">
-    <span id="qCount">پرسیار / Question: 1/10</span>
-    <span id="timer">⏱️ 20s</span>
-  </div>
-  <div class="image-wrapper">
-    <img id="qImage" src="" alt="IT Hardware/Concept Image" class="q-image">
-  </div>
-  <h3 id="questionText">...تێکستا پرسیارێ</h3>
-  <div id="optionsContainer" class="options-grid"></div>
-</section>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <button class="nav-btn active" onclick="switchTab('quiz-tab')">
+            🎮 IT Quiz
+            <span class="sub-text">یاریا زانیاریان</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('room-tab')">
+            ➕ Create Room
+            <span class="sub-text">دروستکرنا ژوورێ</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('puzzle-tab')">
+            🧩 Puzzle Game
+            <span class="sub-text">یاریا پۆزلێ</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('gallery-tab')">
+            💻 IT Gallery
+            <span class="sub-text">بەشێ وێنەیان</span>
+        </button>
+    </nav>
 
-<!-- Puzzle Game Area -->
-<section id="puzzleArea" class="card hidden">
-  <h2>🧩 یاریا ڕێکخستنا وێنەیی یێن IT (Puzzle Game)</h2>
-  <p>پارچەیێن وێنەی ب دروستی ڕێکبێخە د کێمترین دەم دا:</p>
-  <div id="puzzleBoard" class="puzzle-board"></div>
-  <div id="puzzleTimer" class="sub-text">دەمێ بەسەرچۆیی / Elapsed Time: <span id="pTime">0</span> چڕکە</div>
-</section>
+    <!-- Tab 1: IT Quiz Game -->
+    <section id="quiz-tab" class="tab-content active">
+        <div class="card-header">
+            <h2>IT Knowledge Challenge</h2>
+            <p class="sub-text">تاقیکرنا زانیاریێن گشتی یێن ئایتی ب کاتژمێر و وێنە</p>
+        </div>
+
+        <div class="timer-container">
+            ⏱️ Time Left: <span id="timer">20</span>s
+        </div>
+        
+        <div id="quiz-box" class="quiz-card">
+            <div class="img-wrapper">
+                <img id="quiz-image" src="" alt="IT Question Image" class="quiz-img">
+            </div>
+            <h3 id="question-text-en" class="q-title-en">Loading Question...</h3>
+            <p id="question-text-ku" class="q-title-ku">لێدانا پرسیارێ...</p>
+            
+            <div id="options-container" class="options-grid"></div>
+        </div>
+        
+        <div id="result-box" class="result-card" style="display: none;">
+            <h3>🎉 Quiz Finished!</h3>
+            <p class="sub-text">یاری ب دوماهیک هات!</p>
+            <div id="score-display" class="score-badge">0 / 0</div>
+            <button class="primary-btn" onclick="startQuiz()">
+                🔄 Play Again <span class="sub-text">دووبارە دەستپێبکەڤە</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Tab 2: Create Room -->
+    <section id="room-tab" class="tab-content">
+        <div class="card-header">
+            <h2>Create Room & Share Questions</h2>
+            <p class="sub-text">ژوورەکێ دروستبکە و پرسیارێن خۆ بۆ هەڤالان بپۆستە</p>
+        </div>
+
+        <form id="create-room-form" onsubmit="handleCreateRoom(event)">
+            <div class="form-group">
+                <label>Question in English / پرسیار ب ئینگلیزی:</label>
+                <input type="text" id="custom-q-en" required placeholder="e.g. What is the full form of RAM?">
+            </div>
+            <div class="form-group">
+                <label>Question in Kurdish / پرسیار ب کوردی:</label>
+                <input type="text" id="custom-q-ku" required placeholder="بۆ نموونە: RAM کورتکرنا چییە؟">
+            </div>
+            <div class="form-group">
+                <label>Correct Answer / وەڵاما درست:</label>
+                <input type="text" id="custom-answer" required placeholder="e.g. Random Access Memory">
+            </div>
+            <button type="submit" class="primary-btn">
+                🚀 Publish Question <span class="sub-text">بەلاڤکرنا پرسیارێ</span>
+            </button>
+        </form>
+
+        <div id="room-questions-list" class="questions-feed"></div>
+    </section>
+
+    <!-- Tab 3: Puzzle Game -->
+    <section id="puzzle-tab" class="tab-content">
+        <div class="card-header">
+            <h2>IT Hardware Puzzle</h2>
+            <p class="sub-text">یاریا پۆزلا ئامێرێن کۆمپیوتەری - پارچەیان ڕێکبێخە</p>
+        </div>
+        <div class="puzzle-board" id="puzzle-board"></div>
+        <button class="primary-btn" onclick="initPuzzle()">
+            🔀 Shuffle Puzzle <span class="sub-text">تێکەڵکرنا پارچەیان</span>
+        </button>
+    </section>
+
+    <!-- Tab 4: IT Departments Gallery -->
+    <section id="gallery-tab" class="tab-content">
+        <div class="card-header">
+            <h2>IT Departments & Technologies</h2>
+            <p class="sub-text">وێنەیێن بەشێن ئایتی ب دیزاینەکا تەکنەلۆجی یا ب هێز</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500" alt="Software Engineering">
+                <div class="gallery-info">
+                    <h4>Software Engineering</h4>
+                    <p class="sub-text">ئەندازیاریا بۆرده‌سازیێ</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500" alt="Networking">
+                <div class="gallery-info">
+                    <h4>Computer Networks</h4>
+                    <p class="sub-text">تۆڕێن کۆمپیوتەری</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500" alt="Cyber Security">
+                <div class="gallery-info">
+                    <h4>Cyber Security</h4>
+                    <p class="sub-text">سایبەر سیکیوریتی و پاراستن</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" alt="AI & Web">
+                <div class="gallery-info">
+                    <h4>Artificial Intelligence</h4>
+                    <p class="sub-text">ژیرییا دەستکرد و تەکنەلۆجیا</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
