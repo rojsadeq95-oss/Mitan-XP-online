@@ -12,7 +12,10 @@ body { background-color: var(--bg-dark); color: var(--text-white); display: flex
 /* Grid Cards */ .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
 .nav-card { border-radius: 18px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease; border: 1px solid rgba(255, 255, 255, 0.1); }
 .nav-card:hover { transform: translateY(-6px); }
-.card-blue { background: var(--card-blue); box-shadow: 0 4px 20px rgba(0, 82, 204, 0.3); } .card-purple { background: var(--card-purple); box-shadow: 0 4px 20px rgba(112, 26, 184, 0.3); } .card-green { background: var(--card-green); box-shadow: 0 4px 20px rgba(0, 138, 76, 0.3); } .card-gold { background: var(--card-gold); box-shadow: 0 4px 20px rgba(184, 122, 0, 0.3); }
+.card-blue { background: var(--card-blue); box-shadow: 0 4px 20px rgba(0, 82, 204, 0.3); }
+.card-purple { background: var(--card-purple); box-shadow: 0 4px 20px rgba(112, 26, 184, 0.3); }
+.card-green { background: var(--card-green); box-shadow: 0 4px 20px rgba(0, 138, 76, 0.3); }
+.card-gold { background: var(--card-gold); box-shadow: 0 4px 20px rgba(184, 122, 0, 0.3); }
 .card-icon-area { width: 45px; height: 45px; color: var(--text-white); }
 .card-svg { width: 100%; height: 100%; }
 .card-details h3 { font-size: 1.3rem; margin-bottom: 5px; }
