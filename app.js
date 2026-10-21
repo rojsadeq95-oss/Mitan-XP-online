@@ -51,3 +51,34 @@ if (targetTab) targetTab.classList.add('active');
 if (element) element.classList.add('active');
 }
 // Initialize on Load document.addEventListener("DOMContentLoaded", () => { loadQuestion(); });
+// Function to load questions directly function loadQuestion() { const cardBody = document.getElementById('quiz-card-body'); if (!cardBody) return;
+const sampleQ = {
+    questionEn: "What does CPU stand for?",
+    questionKu: "واتایا پەیڤا CPU چییە؟",
+    image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=500",
+    options: ["Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Control Processing Unit"],
+    correct: 0
+};
+
+const qImg = document.getElementById('q-img');
+if (qImg) qImg.src = sampleQ.image;
+
+const textEn = document.getElementById('q-text-en');
+if (textEn) textEn.innerText = sampleQ.questionEn;
+
+const textKu = document.getElementById('q-text-ku');
+if (textKu) textKu.innerText = sampleQ.questionKu;
+
+const grid = document.getElementById('options-grid');
+if (grid) {
+    grid.innerHTML = '';
+    sampleQ.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.style.cssText = "padding:12px; margin:5px; border-radius:8px; background:#111827; border:1px solid #00f2fe; color:#fff; cursor:pointer; width:100%; font-size:1rem;";
+        btn.innerText = opt;
+        grid.appendChild(btn);
+    });
+}
+}
+// Automatically start when page is ready document.addEventListener("DOMContentLoaded", () => { loadQuestion(); });
