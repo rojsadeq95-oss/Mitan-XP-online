@@ -1,35 +1,140 @@
-<!-- Puzzle Game Card -->
-<div class="card-purple nav-card" onclick="openModule('puzzle')">
-    <div class="card-icon-area">
-        <svg viewBox="0 0 24 24" class="card-svg" width="28" height="28"><path fill="currentColor" d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v-1.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5V21h4c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+[10/21/2026 6:38 AM] ❤️‍🩹🖤🐯: <!-- Navigation Cards with Dual Language (Kurdish & English) -->
+<nav class="nav-cards-grid">
+    <div class="nav-card blue-card active" onclick="switchTab('quiz-tab', this)">
+        <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+        <div class="card-title">Quiz Game <span class="sub-tr">یاریا زانیاریان</span></div>
+        <div class="card-sub">Test your knowledge in IT <br> تاقیکرنا زانیاریێن ئایتی (20 پرسیار)</div>
+        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
     </div>
-    <div class="card-details">
-        <h3>Puzzle Game</h3>
-        <p>Solve the puzzle and complete the image</p>
-    </div>
-    <div class="card-arrow">➔</div>
-</div>
 
-<!-- Create Room Card -->
-<div class="card-green nav-card" onclick="openModule('room')">
-    <div class="card-icon-area">
-        <svg viewBox="0 0 24 24" class="card-svg" width="28" height="28"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    <div class="nav-card purple-card" onclick="switchTab('puzzle-tab', this)">
+        <div class="card-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+        <div class="card-title">Puzzle Game <span class="sub-tr">یاریا پۆزلێ</span></div>
+        <div class="card-sub">Solve the puzzle in 10 stages <br> 10 مەرحلە د 10 خولەکان دا</div>
+        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
     </div>
-    <div class="card-details">
-        <h3>Create Room</h3>
-        <p>Play with your friends or others</p>
-    </div>
-    <div class="card-arrow">➔</div>
-</div>
 
-<!-- IT Gallery Card -->
-<div class="card-gold nav-card" onclick="openModule('gallery')">
-    <div class="card-icon-area">
-        <svg viewBox="0 0 24 24" class="card-svg" width="28" height="28"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    <div class="nav-card green-card" onclick="switchTab('room-tab', this)">
+        <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="card-title">Create Room <span class="sub-tr">دروستکرنا ژوورێ</span></div>
+        <div class="card-sub">Play with your friends via code <br> بەشداربوونا هەڤالان ب کۆدی</div>
+        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
     </div>
-    <div class="card-details">
-        <h3>IT Images</h3>
-        <p>Explore IT concepts with visuals</p>
+
+    <div class="nav-card gold-card" onclick="switchTab('gallery-tab', this)">
+        <div class="card-icon"><i class="fa-solid fa-images"></i></div>
+        <div class="card-title">IT Images <span class="sub-tr">وێنە و ڤیدیۆیێن IT</span></div>
+        <div class="card-sub">Explore IT concepts & videos <br> شرۆڤەکرن ب کوردییا بادینی</div>
+        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
     </div>
-    <div class="card-arrow">➔</div>
-</div>
+</nav>
+
+<!-- Quiz Tab -->
+<section id="quiz-tab" class="tab-content active">
+    <div class="code-join-bar">
+        <span><i class="fa-solid fa-key"></i> کۆدێ ژوورێ بۆ هەڤالان / Enter Room Code:</span>
+        <input type="text" id="quiz-room-code" placeholder="کۆدی بنڤیسە (Enter code)...">
+        <button class="btn-action" onclick="joinQuizCode()">تێکەڵبوون / Join</button>
+    </div>
+
+    <div class="game-box">
+        <div class="game-meta">
+            <span class="timer-badge">⏱️ کات / Time: <b id="quiz-timer">20</b>s</span>
+            <span class="progress-badge">📊 پرسیار / Question: <b id="quiz-progress">1 / 20</b></span>
+        </div>
+
+        <div id="quiz-card-body">
+            <img id="q-img" src="" alt="IT Image" class="quiz-media-img">
+            <h3 id="q-text-en">Loading...</h3>
+            <h4 id="q-text-ku">لێدانا پرسیارێ...</h4>
+
+            <div id="options-grid" class="options-2x2"></div>
+        </div>
+
+        <div id="quiz-result-screen" style="display: none;" class="result-box">
+            <h2>🎉 یاری ب دوماهیک هات! / Quiz Completed!</h2>
+            <div class="final-score" id="final-score-text">0 / 20</div>
+            <button class="btn-action" onclick="restartQuiz()">دووبارە دەستپێبکەڤە / Play Again</button>
+        </div>
+    </div>
+</section>
+
+<!-- Puzzle Tab -->
+<section id="puzzle-tab" class="tab-content">
+    <div class="code-join-bar">
+        <span><i class="fa-solid fa-gamepad"></i> کۆدێ پۆزلا هەڤالان / Puzzle Room Code:</span>
+        <input type="text" id="puzzle-room-code" placeholder="کۆدێ پۆزلێ بنڤیسە...">
+        <button class="btn-action" onclick="joinPuzzleCode()">بەشداربوون / Join</button>
+    </div>
+
+    <div class="puzzle-container-card">
+        <div class="puzzle-status">
+            <span>مەرحلە / Stage: <b id="puzzle-stage-num">1 / 10</b></span>
+            <span>کاتی گشتی / Time: <b id="puzzle-clock">10:00</b></span>
+        </div>
+        <div class="puzzle-grid-board" id="puzzle-board"></div>
+        <button class="btn-action" onclick="nextPuzzleStage()">مەرحەلا پاشتر / Next Stage ➡️</button>
+    </div>
+</section>
+
+<!-- Create Room Tab -->
+<section id="room-tab" class="tab-content">
+[10/21/2026 6:38 AM] ❤️‍🩹🖤🐯: <div class="create-room-box" style="background:var(--panel-bg); padding:25px; border-radius:15px; text-align:left;">
+        <h3 style="color:var(--gold); margin-bottom:10px;"><i class="fa-solid fa-plus-circle"></i> دروستکرنا ژوورا ڕکابەریێ / Create Multiplayer Room</h3>
+        <p style="color:var(--text-muted); margin-bottom:15px;">کۆدەکێ تایبەت بنڤیسە دا هەڤالێن تە ژ مۆبایلێن خۆ ب هەمەهەنگی تێکەڵی یاریێ ببن:</p>
+        <div class="room-setup-form" style="display:flex; gap:10px;">
+            <input type="text" id="new-room-id" placeholder="نموونە: MITAN-XP-2026" style="flex:1; padding:12px; border-radius:8px; background:#0a0f1d; border:1px solid #374151; color:#fff;">
+            <button class="btn-action" onclick="generateRoomCode()">دروستکرن / Create</button>
+        </div>
+        <div id="room-created-info" class="room-created-notice" style="display: none; margin-top:15px; padding:12px; background:rgba(0,242,254,0.1); border:1px solid var(--cyan-neon); border-radius:8px;"></div>
+    </div>
+</section>
+
+<!-- IT Gallery & Videos Tab -->
+<section id="gallery-tab" class="tab-content">
+    <div class="gallery-topics-grid">
+        <div class="topic-card">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" alt="Software Engineering">
+            <div class="topic-info">
+                <h3>Software Engineering <span class="sub-tr">ئەندازیاریا بڕۆگرامسازیێ</span></h3>
+                <p class="ku-desc">دروستکرنا ئەپلیکەیشن و سیستەمان ب ڕێکا کۆد و زمانێن بەرنامەسازیێ بۆ خزمەتکرنا جڤاکی.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/kqtD5dpn9C8" title="Software Video" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600" alt="Networks">
+            <div class="topic-info">
+                <h3>Computer Networks <span class="sub-tr">تۆڕێن کۆمپیوتەری</span></h3>
+                <p class="ku-desc">گرێدانا کۆمپیوتەر و ئامێران ب ئێک ڤە بۆ ئاڵوگۆڕکرنا زانیاریان و پێکڤە گەهشتنێ.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/QKjcHYnQ3g4" title="Networks Video" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600" alt="Cyber Security">
+            <div class="topic-info">
+                <h3>Cyber Security <span class="sub-tr">سایبەر سیکیوریتی و پاراستن</span></h3>
+                <p class="ku-desc">پاراستنا سیستم، زانیاری و تۆڕێن کۆمپیوتەری ژ هێرشێن ئەلیکترۆنی و دزینا داتایان.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/inWWhr5tnEA" title="Security Video" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" alt="Artificial Intelligence">
+            <div class="topic-info">
+                <h3>Artificial Intelligence <span class="sub-tr">ژیرییا دەستکرد</span></h3>
+                <p class="ku-desc">پەرەپێدانا مەکینەیان دا شیان هەبن وەک مرۆڤی هزڕ بکەن و بڕیاران بدەن.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/2ePf9rueIbo" title="AI Video" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
