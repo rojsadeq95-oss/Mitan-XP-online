@@ -1,645 +1,188 @@
-
-"use strict";
-
-// ==========================================
-// MitanXP — IT Educational Game
-// English + Kurdish Badini
-// ==========================================
-
-const DEFAULT_QUESTIONS = [
-  {
-    en: "Which component is known as the brain of a computer?",
-    ku: "کیش بەشێ کۆمپیوتەری دهێتە ژمارتن وەک مێشکێ وی؟",
-    img: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600",
-    options: [
-      "Central Processing Unit (CPU)",
-      "Random Access Memory (RAM)",
-      "Hard Disk Drive (HDD)",
-      "Power Supply Unit (PSU)"
-    ],
-    correct: 0
-  },
-  {
-    en: "Which language is used to style web pages?",
-    ku: "کیش زمان دهێتە بکارئینان بۆ دیزاینکرنا مالپەڕان؟",
-    img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600",
-    options: ["Python", "CSS", "C++", "SQL"],
-    correct: 1
-  },
-  {
-    en: "Which memory loses its data when power is turned off?",
-    ku: "کیش بیردانک دەمێ کارەبا دچیت داتایێن خۆ ژ دەست ددەت؟",
-    img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=600",
-    options: ["SSD", "ROM", "RAM", "Flash Drive"],
-    correct: 2
-  },
-  {
-    en: "What does HTML stand for?",
-    ku: "HTML کورتکرنا چییە؟",
-    img: "https://images.unsplash.com/photo-1621839673705-6617adf9e890?w=600",
-    options: [
-      "Hyper Text Markup Language",
-      "High Tech Multi Language",
-      "Hyper Transfer Main Logic",
-      "Home Tool Markup Level"
-    ],
-    correct: 0
-  },
-  {
-    en: "Which of these is an open-source operating system?",
-    ku: "کیش ژ ڤان سیستەمێن کارپێکرنێ یێ کراوەیە؟",
-    img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600",
-    options: ["Linux", "MS Office", "Photoshop", "PowerPoint"],
-    correct: 0
-  },
-  {
-    en: "What is the main function of a router?",
-    ku: "ئەرکێ سەرەکی یێ Router چییە؟",
-    img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600",
-    options: [
-      "Store files",
-      "Forward data between networks",
-      "Print documents",
-      "Display images"
-    ],
-    correct: 1
-  },
-  {
-    en: "Which protocol is used for secure web browsing?",
-    ku: "کیش پڕۆتۆکۆڵ بۆ گەڕیانا پاراستی ل وێبێ دهێتە بکارئینان؟",
-    img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600",
-    options: ["HTTP", "HTTPS", "FTP", "SMTP"],
-    correct: 1
-  },
-  {
-    en: "What does SQL stand for?",
-    ku: "SQL کورتکرنا چییە؟",
-    img: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600",
-    options: [
-      "Structured Query Language",
-      "Simple Quick Logic",
-      "System Quality Level",
-      "Sequential Query List"
-    ],
-    correct: 0
-  },
-  {
-    en: "Which device converts digital and analog signals?",
-    ku: "کیش ئامێر ئاماژەیێن دیجیتاڵی و ئەنالۆگ دگوهۆڕیت؟",
-    img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-    options: ["Modem", "Switch", "Monitor", "Keyboard"],
-    correct: 0
-  },
-  {
-    en: "Which file extension is used for Python scripts?",
-    ku: "پاشگرێ فایلێن Python چییە؟",
-    img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600",
-    options: [".py", ".html", ".cpp", ".jpg"],
-    correct: 0
-  },
-  {
-    en: "Which malware disguises itself as legitimate software?",
-    ku: "کیش جۆرێ malware خۆ وەک بەڕنامەیەکا ڕاستەقینە نیشان ددەت؟",
-    img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600",
-    options: ["Trojan Horse", "Adware", "Firewall", "Cookie"],
-    correct: 0
-  },
-  {
-    en: "Which cloud service provides virtual machines?",
-    ku: "کیش جۆرێ خزمەتگوزاریا Cloud مەکینەیێن ڤێرچواڵ دابین دکەت؟",
-    img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600",
-    options: ["IaaS", "SaaS", "PaaS", "SMTP"],
-    correct: 0
-  },
-  {
-    en: "What does CPU stand for?",
-    ku: "CPU کورتکرنا چییە؟",
-    img: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600",
-    options: [
-      "Central Processing Unit",
-      "Computer Personal Utility",
-      "Central Program Upload",
-      "Control Power Unit"
-    ],
-    correct: 0
-  },
-  {
-    en: "Which HTML tag creates a hyperlink?",
-    ku: "کیش تاگە ل HTML پەیوەندییەکێ دروست دکەت؟",
-    img: "https://images.unsplash.com/photo-1621839673705-6617adf9e890?w=600",
-    options: ["<a>", "<p>", "<h1>", "<img>"],
-    correct: 0
-  },
-  {
-    en: "Which device connects multiple devices in a LAN?",
-    ku: "کیش ئامێر چەند ئامێران د ناڤ تۆڕەکا LAN دا پەیوەند دکەت؟",
-    img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600",
-    options: ["Switch", "Printer", "Scanner", "Speaker"],
-    correct: 0
-  },
-  {
-    en: "What is the primary purpose of a firewall?",
-    ku: "ئەرکێ سەرەکی یێ Firewall چییە؟",
-    img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600",
-    options: [
-      "Protect and filter network traffic",
-      "Increase screen brightness",
-      "Edit photos",
-      "Create presentations"
-    ],
-    correct: 0
-  },
-  {
-    en: "Which of these is a database management system?",
-    ku: "کیش ژ ڤان سیستەمەکێ بەڕێڤەبرنا داتابەیسێیە؟",
-    img: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600",
-    options: ["MySQL", "HTML", "CSS", "JPEG"],
-    correct: 0
-  },
-  {
-    en: "Which language is commonly used for AI and data science?",
-    ku: "کیش زمان ب گشتی بۆ AI و زانستا داتایان دهێتە بکارئینان؟",
-    img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-    options: ["Python", "HTML", "CSS", "XML"],
-    correct: 0
-  },
-  {
-    en: "What is the full form of URL?",
-    ku: "URL کورتکرنا چییە؟",
-    img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600",
-    options: [
-      "Uniform Resource Locator",
-      "Universal Record Link",
-      "User Route Language",
-      "Unified Remote Login"
-    ],
-    correct: 0
-  },
-  {
-    en: "Which unit is commonly used to measure computer storage?",
-    ku: "کیش یەکە بۆ پێڤانا شوێنێ هەڵگرتنا داتایان دهێتە بکارئینان؟",
-    img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=600",
-    options: ["Byte", "Meter", "Liter", "Volt"],
-    correct: 0
-  }
+// 20 Full IT Questions
+const quizData = [
+    { en: "What is considered the brain of the computer?", ku: "مێشکێ کۆمپیوتەری چییە؟", img: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600", options: ["CPU", "RAM", "HDD", "GPU"], correct: 0 },
+    { en: "Which language is used for web styling?", ku: "کیش زمان بۆ دیزاینا وێبی هێتە بکارئینان؟", img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600", options: ["Python", "CSS", "C++", "SQL"], correct: 1 },
+    { en: "Volatile memory in PC?", ku: "کیش بیردانک ب چۆنا کارەبێ دادەمریت؟", img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=600", options: ["SSD", "ROM", "RAM", "Flash"], correct: 2 },
+    { en: "What does HTML stand for?", ku: "کورتکرنا HTML چییە؟", img: "https://images.unsplash.com/photo-1621839673705-6617adf9e890?w=600", options: ["Hyper Text Markup Language", "High Tech Multi", "Hyper Transfer", "Home Tool"], correct: 0 },
+    { en: "Open-source Operating System?", ku: "سیستەمێ کراوە کیژە؟", img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600", options: ["Linux", "Windows", "MacOS", "iOS"], correct: 0 },
+    { en: "Primary function of a Router?", ku: "ئەرکێ ڕاوتەری چییە؟", img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600", options: ["Storage", "Forward Data Packets", "Cooling", "Display"], correct: 1 },
+    { en: "Secure protocol for browsing?", ku: "پڕۆتۆکۆڵێ پاریزراو بۆ وێبی؟", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600", options: ["HTTP", "HTTPS", "FTP", "SMTP"], correct: 1 },
+    { en: "SQL is used for?", ku: "SQL بۆ چی دهێتە بکارئینان؟", img: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600", options: ["Databases", "Audio", "Networks", "Graphics"], correct: 0 },
+    { en: "Device converting digital to analog?", ku: "ئامێرا ئاماژەیا دیجیتاڵی دگوهۆڕیت؟", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600", options: ["Modem", "Switch", "Hub", "Repeater"], correct: 0 },
+    { en: "Python extension file?", ku: "پاشگرا فایلا پایتۆن؟", img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600", options: [".py", ".html", ".js", ".cpp"], correct: 0 },
+    { en: "Malware disguised as real software?", ku: "ڤایرۆسێ خۆ دکەتە وەک بەڕنامەکێ دروست؟", img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600", options: ["Trojan Horse", "Spyware", "Adware", "Worm"], correct: 0 },
+    { en: "Cloud Virtual Machines Model?", ku: "کیش جۆرێ عەورێ مەکینەیێن ڤێرچواڵ ددەت؟", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600", options: ["IaaS", "SaaS", "PaaS", "DaaS"], correct: 0 },
+    { en: "Full form of RAM?", ku: "کورتکرنا RAM چییە؟", img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=600", options: ["Random Access Memory", "Read Access", "Rapid Active", "Remote Access"], correct: 0 },
+    { en: "IP stands for?", ku: "IP کورتکرنا چییە؟", img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600", options: ["Internet Protocol", "Internal Program", "Index Page", "Instant Packet"], correct: 0 },
+    { en: "USB stands for?", ku: "USB کورتکرنا چییە؟", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600", options: ["Universal Serial Bus", "Ultra Secure Block", "Unified System", "Utility Software"], correct: 0 },
+    { en: "Main board in computer?", ku: "سەرەکیترین پلێتا کۆمپیوتەری؟", img: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600", options: ["Motherboard", "Keyboard", "Monitor", "CPU"], correct: 0 },
+    { en: "Company making Windows?", ku: "کۆمپانیایا ویندۆز دروستکری؟", img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600", options: ["Microsoft", "Apple", "Google", "IBM"], correct: 0 },
+    { en: "GPU is used for?", ku: "GPU پتر بۆ چییە؟", img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600", options: ["Graphics", "Text Typing", "Sound", "Printing"], correct: 0 },
+    { en: "WIFI stands for?", ku: "WIFI کورتکرنا چییە؟", img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600", options: ["Wireless Fidelity", "Wired Finder", "Web Filter", "Wide Field"], correct: 0 },
+    { en: "Default HTTP Port?", ku: "ژمارە پۆرتێ HTTP؟", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600", options: ["80", "443", "21", "25"], correct: 0 }
 ];
 
-const QUESTION_KEY = "mitanxp_custom_questions_v1";
-const ROOM_KEY = "mitanxp_room_questions_v1";
+let currQIdx = 0;
+let quizScore = 0;
+let qTimer;
+let qTimeLeft = 20;
 
-let fullQuizData = [...DEFAULT_QUESTIONS];
-let currentQuestions = [];
-let currentIndex = 0;
-let score = 0;
-let timeLeft = 20;
-let timer = null;
-let answered = false;
+function switchTab(tabId, el) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-card').forEach(c => c.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    if(el) el.classList.add('active');
 
-let puzzlePieces = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-let selectedPiece = null;
-
-const $ = (id) => document.getElementById(id);
-
-// Safe local storage helpers
-function readStorage(key, fallback = []) {
-  try {
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : fallback;
-  } catch {
-    return fallback;
-  }
+    if (tabId === 'quiz-tab') restartQuiz();
+    if (tabId === 'puzzle-tab') { initPuzzle(); startPuzzleClock(); }
 }
 
-function writeStorage(key, value) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-    return true;
-  } catch {
-    return false;
-  }
+function restartQuiz() {
+    currQIdx = 0;
+    quizScore = 0;
+    document.getElementById('quiz-card-body').style.display = 'block';
+    document.getElementById('quiz-result-screen').style.display = 'none';
+    loadQ();
 }
 
-function shuffle(array) {
-  const result = [...array];
+function loadQ() {
+    clearInterval(qTimer);
+    qTimeLeft = 20;
+    document.getElementById('quiz-timer').textContent = qTimeLeft;
+    document.getElementById('quiz-progress').textContent = `${currQIdx + 1} / 20`;
 
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
-}
-
-// Load saved custom questions
-function loadSavedQuestions() {
-  const saved = readStorage(QUESTION_KEY, []);
-
-  if (!Array.isArray(saved)) return;
-
-  saved.forEach((q) => {
-    if (
-      q &&
-      typeof q.en === "string" &&
-      typeof q.ku === "string" &&
-      Array.isArray(q.options) &&
-      q.options.length === 4 &&
-      Number.isInteger(q.correct) &&
-      q.correct >= 0 &&
-      q.correct < 4
-    ) {
-      fullQuizData.push({
-        en: q.en,
-        ku: q.ku,
-        img: q.img || "",
-        options: q.options,
-        correct: q.correct
-      });
-    }
-  });
-}
-
-// Switch tabs without relying on the global event object
-function switchTab(tabId) {
-  document.querySelectorAll(".tab-content").forEach((tab) => {
-    tab.classList.toggle("active", tab.id === tabId);
-  });
-
-  document.querySelectorAll(".nav-btn").forEach((button) => {
-    const inlineAction = button.getAttribute("onclick") || "";
-    button.classList.toggle(
-      "active",
-      inlineAction.includes(`'${tabId}'`) ||
-      inlineAction.includes(`"${tabId}"`)
-    );
-  });
-
-  if (tabId === "quiz-tab") startQuiz();
-  if (tabId === "puzzle-tab") initPuzzle();
-}
-
-// Quiz
-function startQuiz() {
-  clearInterval(timer);
-
-  currentQuestions = shuffle(fullQuizData);
-  currentIndex = 0;
-  score = 0;
-  answered = false;
-
-  if ($("quiz-box")) $("quiz-box").style.display = "block";
-  if ($("result-box")) $("result-box").style.display = "none";
-
-  loadQuestion();
-}
-
-function loadQuestion() {
-  clearInterval(timer);
-  answered = false;
-
-  if (currentIndex >= currentQuestions.length) {
-    showResults();
-    return;
-  }
-
-  timeLeft = 20;
-
-  if ($("timer")) $("timer").textContent = timeLeft;
-
-  const q = currentQuestions[currentIndex];
-
-  if ($("question-text-en")) {
-    $("question-text-en").textContent = q.en;
-  }
-
-  if ($("question-text-ku")) {
-    $("question-text-ku").textContent = q.ku;
-  }
-
-  const image = $("quiz-image");
-
-  if (image) {
-    if (q.img) {
-      image.src = q.img;
-      image.style.display = "inline-block";
-    } else {
-      image.removeAttribute("src");
-      image.style.display = "none";
+    if (currQIdx >= quizData.length) {
+        document.getElementById('quiz-card-body').style.display = 'none';
+        document.getElementById('quiz-result-screen').style.display = 'block';
+        document.getElementById('final-score-text').textContent = `${quizScore} / 20`;
+        return;
     }
 
-    image.onerror = () => {
-      image.style.display = "none";
-    };
-  }
+    const q = quizData[currQIdx];
+    document.getElementById('q-text-en').textContent = q.en;
+    document.getElementById('q-text-ku').textContent = q.ku;
+    document.getElementById('q-img').src = q.img;
 
-  const optionsDiv = $("options-container");
-  if (!optionsDiv) return;
+    const optsDiv = document.getElementById('options-grid');
+    optsDiv.innerHTML = '';
 
-  optionsDiv.replaceChildren();
-
-  q.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "option-btn";
-    button.textContent = option;
-
-    button.addEventListener("click", () => {
-      checkAnswer(index);
+    q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = opt;
+        btn.onclick = () => answerQ(idx);
+        optsDiv.appendChild(btn);
     });
 
-    optionsDiv.appendChild(button);
-  });
-
-  timer = setInterval(() => {
-    timeLeft--;
-
-    if ($("timer")) $("timer").textContent = timeLeft;
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      answered = true;
-      showAnswerFeedback(null);
-    }
-  }, 1000);
+    qTimer = setInterval(() => {
+        qTimeLeft--;
+        document.getElementById('quiz-timer').textContent = qTimeLeft;
+        if (qTimeLeft <= 0) {
+            clearInterval(qTimer);
+            currQIdx++;
+            loadQ(); // Auto advance if unanswered
+        }
+    }, 1000);
 }
 
-function showAnswerFeedback(selectedIndex) {
-  const q = currentQuestions[currentIndex];
-  const buttons = $("options-container")?.querySelectorAll("button");
-
-  if (!buttons || !q) return;
-
-  buttons.forEach((button, index) => {
-    button.disabled = true;
-
-    if (index === q.correct) {
-      button.style.borderColor = "#22c55e";
-      button.style.background = "rgba(34,197,94,0.15)";
-    } else if (index === selectedIndex) {
-      button.style.borderColor = "#ef4444";
-      button.style.background = "rgba(239,68,68,0.15)";
-    }
-  });
-
-  if (selectedIndex === null) {
-    announce("Time is up! / دەم تەمام بوو!");
-  } else if (selectedIndex === q.correct) {
-    announce("Correct! / وەڵام درستە!");
-  } else {
-    announce("Incorrect! / وەڵام خەلەتە!");
-  }
-
-  setTimeout(() => {
-    currentIndex++;
-    loadQuestion();
-  }, 900);
+function answerQ(selected) {
+    clearInterval(qTimer);
+    if (selected === quizData[currQIdx].correct) quizScore++;
+    currQIdx++;
+    loadQ();
 }
 
-function announce(message) {
-  let notice = $("quiz-notice");
-
-  if (!notice) {
-    notice = document.createElement("p");
-    notice.id = "quiz-notice";
-    notice.setAttribute("role", "status");
-    notice.style.margin = "12px 0";
-    notice.style.fontWeight = "bold";
-
-    const options = $("options-container");
-    if (options) options.after(notice);
-  }
-
-  notice.textContent = message;
+function joinQuizCode() {
+    const code = document.getElementById('quiz-room-code').value;
+    if(code) alert("تۆ تێکەڵی ژوورا [" + code + "] بی ب سەرکەفتیانە!");
 }
 
-function checkAnswer(selectedIndex) {
-  if (answered) return;
+// Puzzle 10 Stages & 10 Mins
+let pStage = 1;
+let pTimeLeft = 600;
+let pClockInterval;
 
-  answered = true;
-  clearInterval(timer);
-
-  const q = currentQuestions[currentIndex];
-
-  if (selectedIndex === q.correct) score++;
-
-  showAnswerFeedback(selectedIndex);
+function startPuzzleClock() {
+    clearInterval(pClockInterval);
+    pClockInterval = setInterval(() => {
+        if (pTimeLeft > 0) {
+            pTimeLeft--;
+            let m = Math.floor(pTimeLeft / 60);
+            let s = pTimeLeft % 60;
+            document.getElementById('puzzle-clock').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+    }, 1000);
 }
 
-function showResults() {
-  clearInterval(timer);
-
-  if ($("quiz-box")) $("quiz-box").style.display = "none";
-  if ($("result-box")) $("result-box").style.display = "block";
-
-  if ($("score-display")) {
-    $("score-display").textContent =
-      `${score} / ${currentQuestions.length}`;
-  }
-
-  const resultTitle = $("result-box")?.querySelector("h3");
-
-  if (resultTitle) {
-    const percentage = currentQuestions.length
-      ? Math.round((score / currentQuestions.length) * 100)
-      : 0;
-
-    resultTitle.textContent =
-      percentage >= 80 ? "🏆 Excellent! / زۆر باش!" :
-      percentage >= 50 ? "👏 Good job! / باشە!" :
-      "💪 Keep learning! / بەردەوام بە!";
-  }
-}
-
-// Create Room
-function handleCreateRoom(event) {
-  event.preventDefault();
-
-  const qEn = $("custom-q-en")?.value.trim();
-  const qKu = $("custom-q-ku")?.value.trim();
-  const answer = $("custom-answer")?.value.trim();
-
-  if (!qEn || !qKu || !answer) {
-    alert("Please fill in all fields. / تکایە هەموو خانەیان پڕ بکە.");
-    return;
-  }
-
-  // The existing HTML form has only one answer field.
-  // Ask for three distractors to build a real four-option question.
-  const distractors = [];
-
-  for (let i = 1; i <= 3; i++) {
-    const choice = prompt(
-      `Enter incorrect option ${i} of 3:`
-    );
-
-    if (choice === null || !choice.trim()) {
-      alert(
-        "Question not published. Please enter all three incorrect options."
-      );
-      return;
-    }
-
-    distractors.push(choice.trim());
-  }
-
-  const options = shuffle([answer, ...distractors]);
-  const question = {
-    en: qEn,
-    ku: qKu,
-    img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600",
-    options,
-    correct: options.indexOf(answer)
-  };
-
-  const saved = readStorage(QUESTION_KEY, []);
-  saved.push(question);
-
-  if (!writeStorage(QUESTION_KEY, saved)) {
-    alert(
-      "Could not save this question in browser storage. Check your browser settings."
-    );
-    return;
-  }
-
-  fullQuizData.push(question);
-
-  // Render safely; do not inject user-entered text as HTML.
-  const list = $("room-questions-list");
-
-  if (list) {
-    const item = document.createElement("div");
-    item.className = "feed-item";
-
-    const english = document.createElement("strong");
-    english.textContent = `Q: ${qEn}`;
-
-    const kurdish = document.createElement("p");
-    kurdish.className = "sub-text";
-    kurdish.textContent = qKu;
-
-    const correctAnswer = document.createElement("p");
-    correctAnswer.style.color = "var(--gold)";
-    correctAnswer.textContent = `Correct Answer: ${answer}`;
-
-    item.append(english, kurdish, correctAnswer);
-    list.prepend(item);
-  }
-
-  alert(
-    "Question saved successfully! / پرسیار ب سەرکەفتیانە هاتە پاراستن!"
-  );
-
-  event.target.reset();
-}
-
-// Restore questions created in previous sessions
-function renderSavedRoomQuestions() {
-  const list = $("room-questions-list");
-  if (!list) return;
-
-  const saved = readStorage(QUESTION_KEY, []);
-
-  saved.forEach((q) => {
-    const item = document.createElement("div");
-    item.className = "feed-item";
-
-    const english = document.createElement("strong");
-    english.textContent = `Q: ${q.en}`;
-
-    const kurdish = document.createElement("p");
-    kurdish.className = "sub-text";
-    kurdish.textContent = q.ku;
-
-    const correctAnswer = document.createElement("p");
-    correctAnswer.style.color = "var(--gold)";
-    correctAnswer.textContent = `Correct Answer: ${q.options[q.correct]}`;
-
-    item.append(english, kurdish, correctAnswer);
-    list.appendChild(item);
-  });
-}
-
-// Puzzle Game
-const PUZZLE_IMAGE =
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600";
+let pPieces = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let pSelected = null;
 
 function initPuzzle() {
-  const board = $("puzzle-board");
-  if (!board) return;
+    const board = document.getElementById('puzzle-board');
+    if(!board) return;
+    board.innerHTML = '';
+    pPieces.sort(() => Math.random() - 0.5);
 
-  clearInterval(timer);
-  selectedPiece = null;
-
-  // Shuffle until the puzzle is not already solved.
-  do {
-    puzzlePieces = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8]);
-  } while (puzzlePieces.every((piece, index) => piece === index));
-
-  renderPuzzle();
+    pPieces.forEach((pos, idx) => {
+        const piece = document.createElement('div');
+        piece.className = 'p-piece';
+        const x = (pos % 3) * 100;
+        const y = Math.floor(pos / 3) * 100;
+        piece.style.backgroundImage = 'url("https://images.unsplash.com/photo-1518770660439-4636190af475?w=300")';
+        piece.style.backgroundPosition = `-${x}px -${y}px`;
+        piece.onclick = () => swapPiece(idx);
+        board.appendChild(piece);
+    });
 }
 
-function renderPuzzle() {
-  const board = $("puzzle-board");
-  if (!board) return;
-
-  board.replaceChildren();
-
-  puzzlePieces.forEach((pos, index) => {
-    const piece = document.createElement("button");
-    piece.type = "button";
-    piece.className = "puzzle-piece";
-    piece.setAttribute("aria-label", `Puzzle piece ${index + 1}`);
-
-    const x = (pos % 3) * 50;
-    const y = Math.floor(pos / 3) * 50;
-
-    piece.style.backgroundImage = `url("${PUZZLE_IMAGE}")`;
-    piece.style.backgroundSize = "300px 300px";
-    piece.style.backgroundPosition = `${(x / 100) * -100}% ${(y / 100) * -100}%`;
-    piece.style.backgroundPosition = `-${(pos % 3) * 100}px -${Math.floor(pos / 3) * 100}px`;
-    piece.style.width = "100%";
-    piece.style.height = "100%";
-
-    if (selectedPiece === index) {
-      piece.style.outline = "3px solid #ffc107";
-      piece.style.outlineOffset = "-3px";
+function swapPiece(idx) {
+    if (pSelected === null) {
+        pSelected = idx;
+    } else {
+        let temp = pPieces[pSelected];
+        pPieces[pSelected] = pPieces[idx];
+        pPieces[idx] = temp;
+        pSelected = null;
+        renderP();
     }
-
-    piece.addEventListener("click", () => handlePieceClick(index));
-    board.appendChild(piece);
-  });
 }
 
-function handlePieceClick(index) {
-  if (selectedPiece === null) {
-    selectedPiece = index;
-    renderPuzzle();
-    return;
-  }
-
-  if (selectedPiece === index) {
-    selectedPiece = null;
-    renderPuzzle();
-    return;
-  }
-
-  [puzzlePieces[selectedPiece], puzzlePieces[index]] =
-    [puzzlePieces[index], puzzlePieces[selectedPiece]];
-
-  selectedPiece = null;
-  renderPuzzle();
-
-  const solved = puzzlePieces.every((piece, i) => piece === i);
-
-  if (solved) {
-    setTimeout(() => {
-      alert("🎉 Puzzle solved! / پیرۆزە، پۆزل تەمام بوو!");
-    }, 100);
-  }
+function renderP() {
+    const board = document.getElementById('puzzle-board');
+    const pieces = board.children;
+    pPieces.forEach((pos, idx) => {
+        const x = (pos % 3) * 100;
+        const y = Math.floor(pos / 3) * 100;
+        pieces[idx].style.backgroundPosition = `-${x}px -${y}px`;
+    });
 }
 
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-  loadSavedQuestions();
-  renderSavedRoomQuestions();
-  startQuiz();
-});
+function nextPuzzleStage() {
+    if (pStage < 10) {
+        pStage++;
+        document.getElementById('puzzle-stage-num').textContent = `${pStage} / 10`;
+        initPuzzle();
+    } else {
+        alert("پیرۆزە! تە 10 مەرحلەیێن پۆزلێ ب تەواوی خلاس کرن!");
+        pStage = 1;
+        pTimeLeft = 600;
+        document.getElementById('puzzle-stage-num').textContent = `1 / 10`;
+        initPuzzle();
+    }
+}
+
+function joinPuzzleCode() {
+    const code = document.getElementById('puzzle-room-code').value;
+    if(code) alert("بەشداری د ڕکابەرییا پۆزلێ دا ب کۆدێ [" + code + "]");
+}
+
+function generateRoomCode() {
+    const rId = document.getElementById('new-room-id').value;
+    if(rId) {
+        const info = document.getElementById('room-created-info');
+        info.style.display = 'block';
+        info.innerHTML = `<b>ژوور هاتە دروستکرن!</b> کۆدێ ژوورێ بۆ هەڤالان: <span style="color:var(--cyan-neon);">${rId}</span>`;
+    }
+}
+
+window.onload = restartQuiz;
