@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
-  <!-- باکگراوندی شینی تاری -->
-  <rect width="200" height="200" rx="40" fill="#0F172A" />
-  
-  <!-- نیشانەی XP بە ڕەنگی زەردی تاری -->
-  <path d="M 50 60 L 90 60 L 120 100 L 90 140 L 50 140 L 80 100 Z" fill="#D97706" />
-  
-  <!-- نوسینی Mitan بە ڕەنگی سپی -->
-  <text x="100" y="175" font-family="Arial, sans-serif" font-weight="bold" font-size="24" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">MitanXP</text>
-</svg>
+<!-- Glowing Gold Gradient -->
+<linearGradient id="goldGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+  <stop offset="0%" stop-color="#f59e0b" />
+  <stop offset="50%" stop-color="#fbbf24" />
+  <stop offset="100%" stop-color="#fcd34d" />
+</linearGradient>
+
+<!-- Glow Effect -->
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="8" result="blur" />
+  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+</filter>
