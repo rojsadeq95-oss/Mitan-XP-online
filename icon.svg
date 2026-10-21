@@ -1,5 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="48" fill="#0F172A" />
-  <circle cx="50" cy="50" r="45" fill="none" stroke="#E0F2FE" stroke-width="2" />
-  <path d="M30 70 L30 30 L50 55 L70 30 L70 70" fill="none" stroke="#FBBF24" stroke-width="8" stroke-linejoin="round" />
-</svg>
+<!-- Gold Metallic Gradient -->
+<linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+  <stop offset="0%" stop-color="#FFF59D"/>
+  <stop offset="50%" stop-color="#FFB300"/>
+  <stop offset="100%" stop-color="#E65100"/>
+</linearGradient>
+
+<!-- Dark Blue Steel Gradient -->
+<linearGradient id="steelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+  <stop offset="0%" stop-color="#2c4c7c"/>
+  <stop offset="100%" stop-color="#0f1f38"/>
+</linearGradient>
+<!-- Letter P -->
+<path d="M 285 180 L 350 180 C 380 180 400 195 400 225 C 400 255 380 270 350 270 L 320 270 L 320 320 L 285 320 Z M 320 210 L 320 240 L 345 240 C 358 240 365 235 365 225 C 365 215 358 210 345 210 Z" 
+      fill="url(#goldGrad)" 
+      stroke="#FFF59D" 
+      stroke-width="2" 
+      stroke-linejoin="round"/>
+
+<!-- Center Lightning Arrow (Replacing X) -->
+<path d="M 210 340 L 275 235 L 240 235 L 320 135 L 295 215 L 335 215 Z" 
+      fill="url(#goldGrad)" 
+      stroke="#FFFFFF" 
+      stroke-width="2.5" 
+      stroke-linejoin="round"/>
