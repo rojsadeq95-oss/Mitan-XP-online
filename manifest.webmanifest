@@ -1,1 +1,15 @@
-{"name":"MitanXP — Play Together","short_name":"MitanXP","start_url":"./index.html","display":"standalone","background_color":"#0a1022","theme_color":"#101a36","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "MitanXP Platform",
+  "short_name": "MitanXP",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080c16",
+  "theme_color": "#080c16",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
