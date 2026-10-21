@@ -1,6 +1,5 @@
-<!-- ڕەنگی زەردی درەوشاوە -->
-<linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-  <stop offset="0%" stop-color="#FFD700" />
-  <stop offset="100%" stop-color="#E69D00" />
-</linearGradient>
-<text x="100" y="175" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">MitanXP</text> </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#0F172A" />
+  <circle cx="50" cy="50" r="45" fill="none" stroke="#E0F2FE" stroke-width="2" />
+  <path d="M30 70 L30 30 L50 55 L70 30 L70 70" fill="none" stroke="#FBBF24" stroke-width="8" stroke-linejoin="round" />
+</svg>
