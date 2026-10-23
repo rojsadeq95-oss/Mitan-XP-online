@@ -1,73 +1,56 @@
-loadQuiz();
-        }, 1300);
-    };
-
-    optionsGrid.appendChild(btn);
-});
+// ========================================== // ١. داتای پرسیارەکانی یاری زانیاری (Quiz) // ========================================== const quizData = [ { question: "CPU چییە؟", options: ["حافیزەی کاتی", "مێشکی کۆمپیوتەر", "شاشەی پیشاندان", "هارد دیسک"], correct: 1 }, { question: "کام لەمانە هەڵدەگرێتەوە بۆ هەڵگرتنی داتای هەمیشەیی؟", options: ["RAM", "CPU", "HDD", "GPU"], correct: 2 }, { question: "HTTP چییە؟", options: ["پڕۆتۆکۆڵی گواستنەوەی هایپەر تێکست", "جۆرێک لە ڤایرۆس", "زمانێکی پرۆگرامسازی", "سیستەمی کارپێکردن"], correct: 0 }, // تۆ دەتوانیت لێرەدا بیگەیهێنی بە ٢٠ پرسیار بە هەمان شێوە ];
+let currentQuestionIndex = 0; let timeLeft = 20; let timerInterval; let score = 0;
+// ========================================== // ٢. فەنکشنەکانی سەرەکی // ==========================================
+function goHome() { clearInterval(timerInterval); document.getElementById('game-container').classList.add('hidden'); document.getElementById('quiz-section').classList.add('hidden'); document.getElementById('it-images-section').classList.add('hidden'); document.getElementById('main-menu').classList.remove('hidden'); }
+function startQuiz() { document.getElementById('main-menu').classList.add('hidden'); document.getElementById('game-container').classList.remove('hidden'); document.getElementById('quiz-section').classList.remove('hidden');
+currentQuestionIndex = 0;
+score = 0;
+loadQuestion();
 }
-function restartQuiz() { currentQ = 0; score = 0; loadQuiz(); }
-document.addEventListener("DOMContentLoaded", function() { loadQuiz(); });
-const quizData = [ { questionEn: "What does CPU stand for?", questionKu: "واتایا پەیڤا CPU چییە؟", image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=500", options: [ "Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Control Processing Unit" ], correct: 0 }, { questionEn: "Which of the following is an Operating System?", questionKu: "کیش ژ ڤان سیستەمێ کارپێکرنێ یە (Operating System)؟", image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=500", options: ["HTML", "Windows 11", "HTTP", "CPU"], correct: 1 }, { questionEn: "What is the main function of RAM?", questionKu: "ئەرکێ سەرەکیی یێ زاکیرەیا RAM چییە؟", image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=500", options: [ "Permanent Storage (خەزنکرنا دەوامی)", "Temporary Memory (زاکیرەیا کاتی)", "Power Supply (دابینکرنا کارەبێ)", "Internet Connection (ئینتەرنێت)" ], correct: 1 } ];
-let currentQ = 0; let score = 0; let answered = false;
-function loadQuiz() { answered = false; const qImg = document.getElementById('q-img'); const qTextEn = document.getElementById('q-text-en'); const qTextKu = document.getElementById('q-text-ku'); const optionsGrid = document.getElementById('options-grid'); const progress = document.getElementById('quiz-progress');
-if (!optionsGrid) return;
+function loadQuestion() { if (currentQuestionIndex >= quizData.length) { endQuiz(); return; }
+document.getElementById('question-counter').innerText = `Question: ${currentQuestionIndex + 1}/${quizData.length}`;
 
-if (currentQ >= quizData.length) {
-    optionsGrid.innerHTML = `
-        <div style="text-align:center; padding:30px;">
-            <h2 style="color: #ffc107; font-size: 1.8rem; margin-bottom: 15px;">🎉 تاقیکردن تەواو بوو!</h2>
-            <p style="font-size: 1.2rem; color: #fff; margin-bottom: 20px;">نمرا تە: <span style="color: #00f2fe; font-weight: bold;">${score} / ${quizData.length}</span></p>
-            <button onclick="restartQuiz()" style="padding: 12px 25px; background: linear-gradient(135deg, #00f2fe, #4facfe); border: none; border-radius: 10px; color: #000; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 0 15px rgba(0,242,254,0.4);">دووبارە دەستپێکرن / Restart</button>
-        </div>
-    `;
-    return;
-}
+const currentQuestion = quizData[currentQuestionIndex];
+document.getElementById('question-text').innerText = currentQuestion.question;
 
-const currentItem = quizData[currentQ];
+const optionsContainer = document.getElementById('options-container');
+optionsContainer.innerHTML = '';
 
-if (qImg) qImg.src = currentItem.image;
-if (qTextEn) qTextEn.innerText = currentItem.questionEn;
-if (qTextKu) qTextKu.innerText = currentItem.questionKu;
-if (progress) progress.innerText = `Question: ${currentQ + 1} / ${quizData.length}`;
-
-optionsGrid.innerHTML = '';
-currentItem.options.forEach((opt, index) => {
+currentQuestion.options.forEach((option, index) => {
     const btn = document.createElement('button');
-    btn.innerText = opt;
-    btn.style.cssText = "padding: 14px 18px; background: rgba(17, 24, 39, 0.95); border: 1px solid rgba(0, 242, 254, 0.4); color: #fff; border-radius: 10px; cursor: pointer; text-align: right; font-size: 1.05rem; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.3);";
-    
-    btn.onmouseover = () => {
-        if(!answered) {
-            btn.style.borderColor = "#00f2fe";
-            btn.style.boxShadow = "0 0 10px rgba(0,242,254,0.4)";
-        }
-    };
-    btn.onmouseout = () => {
-        if(!answered) {
-            btn.style.borderColor = "rgba(0, 242, 254, 0.4)";
-            btn.style.boxShadow = "0 4px 6px rgba(0,0,0,0.3)";
-        }
-    };
+    btn.classList.add('option-btn');
+    btn.innerText = option;
+    btn.onclick = () => checkAnswer(index);
+    optionsContainer.appendChild(btn);
+});
 
-    btn.onclick = function() {
-        if (answered) return;
-        answered = true;
+startTimer();
+}
+function startTimer() { clearInterval(timerInterval); timeLeft = 20; document.getElementById('timer').innerText = ⏱ Time: ${timeLeft}s;
+timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').innerText = ⏱ Time: ${timeLeft}s;
 
-        const allBtns = optionsGrid.querySelectorAll('button');
-        if (index === currentItem.correct) {
-            score++;
-            btn.style.background = "linear-gradient(135deg, #10b981, #059669)";
-            btn.style.borderColor = "#34d399";
-            btn.style.boxShadow = "0 0 15px rgba(16, 185, 129, 0.6)";
-        } else {
-            btn.style.background = "linear-gradient(135deg, #ef4444, #dc2626)";
-            btn.style.borderColor = "#f87171";
-            btn.style.boxShadow = "0 0 15px rgba(239, 68, 68, 0.6)";
-            
-            // نیشاندانا بەسڤا ڕاست
-            allBtns[currentItem.correct].style.background = "linear-gradient(135deg, #10b981, #059669)";
-            allBtns[currentItem.correct].style.borderColor = "#34d399";
-        }
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        currentQuestionIndex++; 
+        loadQuestion();
+    }
+}, 1000);
+}
+function checkAnswer(selectedIndex) { clearInterval(timerInterval);
+if (selectedIndex === quizData[currentQuestionIndex].correct) {
+    score++;
+}
 
-        setTimeout(() => {
-            currentQ++;
+currentQuestionIndex++;
+loadQuestion();
+}
+function endQuiz() { clearInterval(timerInterval); document.getElementById('quiz-section').innerHTML = <h2 style="text-align:center;">یاری تەواو بوو! 🎉</h2> <p style="text-align:center; font-size: 1.5rem; margin: 20px 0;">ئەنجام: ${score} لە ${quizData.length}</p> <button class="option-btn" style="width: 100%;" onclick="goHome()">گەڕانەوە بۆ مێنیو</button>; }
+// ========================================== // ٣. بەشی وێنەکانی IT // ========================================== function showITImages() { document.getElementById('main-menu').classList.add('hidden'); document.getElementById('game-container').classList.remove('hidden'); document.getElementById('it-images-section').classList.remove('hidden'); }
+// ========================================== // ٤. دروستکردنی ژوور (Room Code) // ========================================== function createRoom() { // دروستکردنی کۆدێکی ڕەندەم لە نێوان ١٠٠٠ بۆ ٩٩٩٩ const roomCode = Math.floor(1000 + Math.random() * 9000);
+alert(`کۆدی ژوورەکەت دروستکرا: ${roomCode}\n\nئەم کۆدە بۆ هەڤاڵانت بنێرە بۆ ئەوەی پێوە بچنە ژوورەوە.`);
+
+// لێرەدا دەتوانیت کۆدی پەیوەندیکردن بە داتابەیس (وەک Firebase) زیاد بکەیت لە داهاتوودا
+}
+// فەنکشنێکی کاتی بۆ پازڵ function startPuzzle() { alert("یاری پازڵ بەم زووانە زیاد دەکرێت! (Under Construction)"); }
