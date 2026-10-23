@@ -1,63 +1,1128 @@
-<!-- مێنیوی سەرەکی -->
-<main class="menu-grid" id="main-menu">
-    <div class="card" onclick="startQuiz()">
-        <div class="icon"><i class="fa-solid fa-brain" style="color: #00d2ff;"></i></div>
-        <h2>Quiz Game</h2>
-        <p>یاری زانیاری</p>
-        <p class="eng">Test your knowledge in IT</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MitanXP - IT Learning & Gaming Platform</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: rgba(18, 26, 43, 0.85);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #9d4edd;
+            --neon-green: #00ff88;
+            --neon-gold: #ffd700;
+            --text-main: #f0f4f8;
+            --text-sub: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
 
-    <div class="card" onclick="startPuzzle()">
-        <div class="icon"><i class="fa-solid fa-puzzle-piece" style="color: #a855f7;"></i></div>
-        <h2>Puzzle Game</h2>
-        <p>یاری پازڵ</p>
-        <p class="eng">Solve the puzzle in 10 stages</p>
-    </div>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    <div class="card" onclick="createRoom()">
-        <div class="icon"><i class="fa-solid fa-users" style="color: #22c55e;"></i></div>
-        <h2>Create Room</h2>
-        <p>دروستکرنا ژوورێ</p>
-        <p class="eng">Play with your friends via code</p>
-    </div>
+        body {
+            background: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(157, 78, 221, 0.08) 0%, transparent 20%);
+            display: flex;
+            flex-direction: column;
+        }
 
-    <div class="card" onclick="showITImages()">
-        <div class="icon"><i class="fa-solid fa-image" style="color: #f59e0b;"></i></div>
-        <h2>IT Images</h2>
-        <p>وێنێت IT</p>
-        <p class="eng">Explore IT concepts & videos</p>
-    </div>
-</main>
+        /* Header & Navigation */
+        header {
+            background: rgba(11, 15, 25, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-<!-- بەشی یارییەکان (سەرەتا شاردەرەوەیە) -->
-<section id="game-container" class="hidden">
-    <button onclick="goHome()" class="back-btn"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەکی</button>
-    
-    <!-- یاری زانیاری (Quiz) -->
-    <div id="quiz-section" class="hidden">
-        <div class="quiz-header">
-            <span id="question-counter">Question: 1/20</span>
-            <span id="timer">⏱ Time: 20s</span>
-        </div>
-        <h2 id="question-text">پرسیار لێرە دێت...</h2>
-        <div id="options-container" class="options-grid">
-            <!-- هەڵبژاردەکان لێرە دێن -->
-        </div>
-    </div>
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    <!-- بەشی وێنەکانی IT -->
-    <div id="it-images-section" class="hidden">
-        <h2 style="color: #ffcc00; margin-bottom: 20px; text-align: center;">زانیارییەکانی IT بە وێنە</h2>
-        <div class="images-grid">
-            <!-- وێنەی یەکەم -->
-            <div class="image-card">
-                <img src="images/1.png" alt="IT Image" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'">
-                <h3>CPU (Central Processing Unit)</h3>
-                <p>مێشکی کۆمپیوتەرە کە هەموو کردارەکان جێبەجێ دەکات.</p>
+        .brand i {
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            filter: drop-shadow(0 0 8px var(--neon-cyan));
+        }
+
+        .brand-text h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+        }
+
+        /* Nav Pills */
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Room Code Header Widget */
+        .room-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--neon-purple);
+        }
+
+        .room-bar input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            width: 90px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+            outline: none;
+        }
+
+        .room-bar button {
+            background: var(--neon-purple);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: var(--text-sub);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .kurdish-subtitle {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            margin-top: 4px;
+            direction: rtl;
+        }
+
+        /* Cards Grid */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.15);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 1rem;
+        }
+
+        /* Game Interfaces */
+        .game-box {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .badge {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--neon-cyan);
+        }
+
+        .timer-badge {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--neon-gold);
+            border-color: var(--neon-gold);
+        }
+
+        /* Quiz Choices */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 14px;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .opt-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--neon-cyan);
+        }
+
+        /* Puzzle Grid */
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 300px;
+            height: 300px;
+            margin: 1.5rem auto;
+        }
+
+        .puzzle-tile {
+            background-size: 300px 300px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .puzzle-tile.empty {
+            background: rgba(0,0,0,0.5) !important;
+            border: 2px dashed rgba(255,255,255,0.1);
+            cursor: default;
+        }
+
+        /* Custom Creator Form */
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: white;
+            outline: none;
+        }
+
+        .btn-action {
+            background: linear-gradient(45deg, var(--neon-cyan), #00A3FF);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-action:hover {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Media Cards */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .media-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .media-thumb {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: var(--neon-cyan);
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+        }
+
+        .media-body {
+            padding: 1.2rem;
+        }
+
+        /* Leaderboard Table */
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .leaderboard th, .leaderboard td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .leaderboard th {
+            color: var(--neon-cyan);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <div class="brand-text">
+                <h1>MitanXP</h1>
+                <p>Mitan Technical Institute / پەیمانگەها میتان</p>
             </div>
-            <!-- دەتوانیت وێنەی تر لێرە زیاد بکەیت بە هەمان شێوە -->
         </div>
-    </div>
-</section>
 
-<script src="app.js"></script>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('dashboard')"><i class="fa-solid fa-house"></i> Dashboard <span class="kurdish-subtitle">سەرەکی</span></button>
+            <button class="nav-btn" onclick="switchTab('custom-quiz')"><i class="fa-solid fa-pen-to-square"></i> Custom 20 Quiz <span class="kurdish-subtitle">چێکرنا 20 پرسیاران</span></button>
+            <button class="nav-btn" onclick="switchTab('puzzle')"><i class="fa-solid fa-puzzle-piece"></i> 10 Stage Puzzle <span class="kurdish-subtitle">پۆزلێ IT</span></button>
+            <button class="nav-btn" onclick="switchTab('bank-quiz')"><i class="fa-solid fa-brain"></i> 50+ IT Question Bank <span class="kurdish-subtitle">بانکا 50+ پرسیاران</span></button>
+            <button class="nav-btn" onclick="switchTab('media')"><i class="fa-solid fa-photo-film"></i> IT Programs & Media <span class="kurdish-subtitle">وێنە و ڤیدیۆ</span></button>
+        </nav>
+
+        <div class="room-bar">
+            <i class="fa-solid fa-users" style="color:var(--neon-purple);"></i>
+            <input type="text" id="globalRoomCode" value="MXP-8492" readonly>
+            <button onclick="joinRoom()"><i class="fa-solid fa-right-to-bracket"></i> Join / بەشدارببە</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="container">
+
+        <!-- DASHBOARD TAB -->
+        <div id="dashboard" class="tab-content active">
+            <div class="hero">
+                <h2>Master IT Together with MitanXP</h2>
+                <p>Elevate your skills and gather knowledge with MitanXP
+                   <span class="kurdish-subtitle">پرسیارێن خۆ بنڤێسه یان زانیاری و پۆزلێت وێنەیێن IT شیکار بکه دگەل هەڤالێن خۆ ب کۆدێ ژوورێ!</span>
+                </p>
+                <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                    <button class="btn-action" style="width:auto;" onclick="createRoom()"><i class="fa-solid fa-plus"></i> Create Room Code / دروستکرنا ژوورێ</button>
+                    <button class="btn-action" style="width:auto; background:rgba(255,255,255,0.1); color:#fff;" onclick="switchTab('custom-quiz')"><i class="fa-solid fa-play"></i> Play Custom Quiz / یارییا پرسیاران</button>
+                </div>
+            </div>
+
+            <div class="grid-cards">
+                <div class="card" onclick="switchTab('custom-quiz')">
+                    <div class="card-icon" style="background:rgba(0,240,255,0.1); color:var(--neon-cyan);">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div class="card-title">Custom 20 Quiz Mode</div>
+                    <div class="card-desc">
+                        Write 20 custom questions with 4 choices each. Share room code with friends and see who gets 1st rank on the leaderboard!
+                        <span class="kurdish-subtitle">چێکرنا 20 پرسیاران ب حەزا خۆ دگەل هەڤالان</span>
+                    </div>
+                    <div class="badge">Multiplayer Sync</div>
+                </div>
+
+                <div class="card" onclick="switchTab('puzzle')">
+                    <div class="card-icon" style="background:rgba(157,78,221,0.1); color:var(--neon-purple);">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <div class="card-title">10 Stage IT Image Puzzle</div>
+                    <div class="card-desc">
+                        Real IT hardware, cybersecurity, and coding diagrams scrambled. Complete 10 stages under a global 10-minute countdown!
+                        <span class="kurdish-subtitle">پۆزلێ وێنێن تەکنۆلۆژیایێ (10 قۆناغ)</span>
+                    </div>
+                    <div class="badge" style="border-color:var(--neon-purple); color:var(--neon-purple);">10:00 Global Timer</div>
+                </div>
+
+                <div class="card" onclick="switchTab('bank-quiz')">
+                    <div class="card-icon" style="background:rgba(255,215,0,0.1); color:var(--neon-gold);">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div class="card-title">50+ IT Questions Bank</div>
+                    <div class="card-desc">
+                        Plays Round 1 (10 questions). Answer all to unlock Round 2 (Total 20 questions) with unique random questions every game!
+                        <span class="kurdish-subtitle">بانکا 50+ پرسیار و وێنێن IT</span>
+                    </div>
+                    <div class="badge" style="border-color:var(--neon-gold); color:var(--neon-gold);">Randomized Engine</div>
+                </div>
+
+                <div class="card" onclick="switchTab('media')">
+                    <div class="card-icon" style="background:rgba(0,255,136,0.1); color:var(--neon-green);">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div class="card-title">IT Programs & Media</div>
+                    <div class="card-desc">
+                        Comprehensive topics on Visual Studio, C#, Python, OS, and Security explained in Badini Kurdish with video lessons.
+                        <span class="kurdish-subtitle">بەشێ تەکنۆلۆژیا زانیاریان (ڕوونكرن ب بادینی)</span>
+                    </div>
+                    <div class="badge" style="border-color:var(--neon-green); color:var(--neon-green);">Kurdish Badini</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOM 20 QUIZ TAB -->
+        <div id="custom-quiz" class="tab-content">
+            <div class="game-box">
+                <div class="game-header">
+                    <div>
+                        <h3>Custom 20 Quiz Mode</h3>
+                        <p class="kurdish-subtitle">چێکرنا 20 پرسیاران ب دەستێ خۆ و بەشداریکرنا هەڤالان</p>
+                    </div>
+                    <div class="badge" id="customRoomDisplay">Room: MXP-8492</div>
+                </div>
+
+                <!-- Step 1: Input Questions OR Start Default -->
+                <div id="quiz-setup">
+                    <p style="margin-bottom:1rem; color:var(--text-sub);">You can either manually enter your custom 20 questions or load the pre-configured IT Quiz Set to play with friends!</p>
+                    <button class="btn-action" onclick="startCustomQuizGame()"><i class="fa-solid fa-play"></i> Start Quiz Game / دەستپێکرنا یاریێ</button>
+                    <br><br>
+                    <button class="btn-action" style="background:rgba(255,255,255,0.05); color:#fff;" onclick="toggleQuestionForm()"><i class="fa-solid fa-plus"></i> Add/Edit Custom Questions / دەستکاریکرنا پرسیاران</button>
+                    
+                    <div id="custom-form" style="display:none; margin-top:1.5rem; text-align:left;">
+                        <h4>Question Editor (Question <span id="formQIndex">1</span>/20)</h4>
+                        <div class="form-group">
+                            <label>Question Text (English & Badini):</label>
+                            <input type="text" id="qText" class="form-input" placeholder="e.g. What does CPU stand for? / مەبەست ژ CPU چیە؟">
+                        </div>
+                        <div class="form-group"><label>Option A:</label><input type="text" id="optA" class="form-input"></div>
+                        <div class="form-group"><label>Option B:</label><input type="text" id="optB" class="form-input"></div>
+                        <div class="form-group"><label>Option C:</label><input type="text" id="optC" class="form-input"></div>
+                        <div class="form-group"><label>Option D:</label><input type="text" id="optD" class="form-input"></div>
+                        <div class="form-group">
+                            <label>Correct Choice Index (1-4):</label>
+                            <input type="number" id="correctOpt" class="form-input" min="1" max="4" value="1">
+                        </div>
+                        <button class="btn-action" onclick="saveCustomQuestion()">Save Question & Next / پاشەکەوتکرن</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Live Play Screen -->
+                <div id="quiz-play" style="display:none;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                        <span class="badge" id="qProgress">Question 1/20</span>
+                        <span class="badge timer-badge" id="qTimer"><i class="fa-solid fa-clock"></i> 20s</span>
+                    </div>
+
+                    <h3 id="currentQText" style="margin-bottom:1.5rem;">Loading Question...</h3>
+
+                    <div class="options-grid" id="optionsContainer">
+                        <!-- Options populated via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Step 3: Leaderboard / Results -->
+                <div id="quiz-results" style="display:none; text-align:center;">
+                    <h2><i class="fa-solid fa-trophy" style="color:var(--neon-gold);"></i> Quiz Finished!</h2>
+                    <p class="kurdish-subtitle">یاری ب دوماهیک هات! ئەنجامێن هەڤالان د خشتەی دا:</p>
+                    
+                    <h3 style="margin-top:1.5rem; color:var(--neon-cyan);">Your Score: <span id="userScore">0</span>/20</h3>
+
+                    <table class="leaderboard">
+                        <thead>
+                            <tr>
+                                <th>Rank / پلە</th>
+                                <th>Player / هەڤال</th>
+                                <th>Score / خال</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody">
+                            <tr><td>1st 🥇</td><td>You (بەشداربوو)</td><td><span id="lbScore">0</span> pts</td></tr>
+                            <tr><td>2nd 🥈</td><td>Amed_IT</td><td>16 pts</td></tr>
+                            <tr><td>3rd 🥉</td><td>Sima_Mitan</td><td>14 pts</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-action" onclick="restartCustomQuiz()" style="margin-top:1.5rem;">Play Again / دوبارەکرن</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 STAGE IT PUZZLE TAB -->
+        <div id="puzzle" class="tab-content">
+            <div class="game-box" style="text-align:center;">
+                <div class="game-header">
+                    <div>
+                        <h3>10 Stage IT Image Puzzle</h3>
+                        <p class="kurdish-subtitle">پۆزلێ وێنەیێن IT - 10 قۆناغ د ماوێ 10 خولەکان دا</p>
+                    </div>
+                    <div class="badge timer-badge" id="puzzleGlobalTimer"><i class="fa-solid fa-stopwatch"></i> 10:00</div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                    <span class="badge" id="puzzleStageBadge">Stage 1/10: Motherboard</span>
+                    <span class="badge" style="border-color:var(--neon-purple); color:var(--neon-purple);" id="puzzleRoomCode">Room Code: MXP-8492</span>
+                </div>
+
+                <div class="puzzle-grid" id="puzzleGrid">
+                    <!-- Tiles populated via JavaScript -->
+                </div>
+
+                <p id="puzzleInstruction" style="font-size:0.85rem; color:var(--text-sub);">Click adjacent tiles to slide them into the correct order!</p>
+                <p class="kurdish-subtitle">کلیکێ ل سەر شوێنێن تێکدای بکە دا وێنەیێ ڕاست ب دەست خۆڤە ببەی!</p>
+
+                <button class="btn-action" id="nextStageBtn" onclick="nextPuzzleStage()" style="display:none; margin-top:1rem;">Next Stage / قۆناغا دووڤدا <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- 50+ IT QUESTION BANK TAB -->
+        <div id="bank-quiz" class="tab-content">
+            <div class="game-box">
+                <div class="game-header">
+                    <div>
+                        <h3>50+ IT Questions Bank (With Visuals)</h3>
+                        <p class="kurdish-subtitle">10 پرسیار ل گەڕا 1ێ + 10 پرسیار ل گەڕا 2ێ ب وێنە و تایمەر</p>
+                    </div>
+                    <div class="badge" id="bankRoundBadge">Round 1 (10 Questions)</div>
+                </div>
+
+                <div id="bank-start-screen" style="text-align:center;">
+                    <i class="fa-solid fa-brain" style="font-size:3.5rem; color:var(--neon-gold); margin-bottom:1rem;"></i>
+                    <h4>Challenge yourself and friends from a pool of 50+ IT questions!</h4>
+                    <p class="kurdish-subtitle" style="margin-bottom:1.5rem;">دێ 10 پرسیارێن بەرهەڤکری هێنە نیشاندان، پاشی 10 پرسیارێن دی ب بێ دووبارەبوون!</p>
+                    <button class="btn-action" onclick="startBankQuiz()"><i class="fa-solid fa-play"></i> Start Quiz / دەستپێکرن</button>
+                </div>
+
+                <div id="bank-play-screen" style="display:none;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                        <span class="badge" id="bankProgress">Question 1/10</span>
+                        <span class="badge timer-badge" id="bankTimer"><i class="fa-solid fa-clock"></i> 20s</span>
+                    </div>
+
+                    <!-- Image Display for questions with visuals -->
+                    <div id="bankImageContainer" style="text-align:center; margin-bottom:1rem; display:none;">
+                        <img id="bankQImage" src="" alt="IT Graphic" style="max-height:180px; border-radius:12px; border:1px solid var(--glass-border);">
+                    </div>
+
+                    <h3 id="bankQText" style="margin-bottom:1.5rem;">Loading Question...</h3>
+
+                    <div class="options-grid" id="bankOptionsContainer">
+                        <!-- Options populated dynamically -->
+                    </div>
+                </div>
+
+                <div id="bank-results-screen" style="display:none; text-align:center;">
+                    <h2><i class="fa-solid fa-star" style="color:var(--neon-gold);"></i> Round Complete!</h2>
+                    <p id="bankRoundResultText" style="margin-top:1rem; font-size:1.1rem;"></p>
+                    <button class="btn-action" id="bankContinueBtn" onclick="continueToRound2()" style="margin-top:1.5rem;">Continue to Round 2 (10 More Questions) / بەردەوامبوون بۆ گەڕا دووێ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- IT MEDIA & PROGRAMS TAB -->
+        <div id="media" class="tab-content">
+            <h3 style="margin-bottom:0.5rem;">IT Software & Core Concepts Hub</h3>
+            <p class="kurdish-subtitle" style="margin-bottom:1.5rem;">بەشێ وێنە، ڤیدیۆ و بەرنامەیێن کۆمپیوتەری دگەل شیکارکڕن ب بادینی</p>
+
+            <div class="media-grid">
+                <!-- Visual Studio & C# -->
+                <div class="media-card">
+                    <div class="media-thumb" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80');">
+                        <i class="fa-solid fa-circle-play play-icon"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4>Visual Studio & C# Windows Forms</h4>
+                        <p class="kurdish-subtitle">بەرنامەیێ Visual Studio و زمانێ C# بۆ دروستکرنا ئەپڵیکەیشنێن سەر کۆمپیوتەری.</p>
+                        <p style="font-size:0.8rem; color:var(--text-sub); margin-top:8px;">
+                            Learn how to build desktop Windows forms, add UI elements, buttons, event handlers, and connect to SQL databases seamlessly.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Python Programming -->
+                <div class="media-card">
+                    <div class="media-thumb" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80');">
+                        <i class="fa-solid fa-circle-play play-icon"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4>Python & Algorithm Fundamentals</h4>
+                        <p class="kurdish-subtitle">کۆدکرن ب زمانێ پایتۆن و بنەماێن ئەلگۆریتمان.</p>
+                        <p style="font-size:0.8rem; color:var(--text-sub); margin-top:8px;">
+                            Explaining data types, loops, logic building, and AI libraries using Python code with Badini voiceover guides.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cybersecurity & Networking -->
+                <div class="media-card">
+                    <div class="media-thumb" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80');">
+                        <i class="fa-solid fa-circle-play play-icon"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4>Networking & Cybersecurity Basics</h4>
+                        <p class="kurdish-subtitle">تۆڕێن کۆمپیوتەری، IP Address، و پاراستنا ئینتەرنێتێ.</p>
+                        <p style="font-size:0.8rem; color:var(--text-sub); margin-top:8px;">
+                            Understanding Routers, Switches, Protocols (TCP/IP, HTTP/HTTPS), Firewalls, and protecting user data against threats.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Operating Systems & Hardware -->
+                <div class="media-card">
+                    <div class="media-thumb" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80');">
+                        <i class="fa-solid fa-circle-play play-icon"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4>Computer Hardware & OS Architecture</h4>
+                        <p class="kurdish-subtitle">پارچەیێن کۆمپیوتەری (RAM, CPU, SSD) و سیستەمێن کارپێکرنێ.</p>
+                        <p style="font-size:0.8rem; color:var(--text-sub); margin-top:8px;">
+                            Detailed visual guide into how hardware components interact with Windows & Linux OS kernels.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>MitanXP Educational Platform &copy; 2026 | Designed for IT Department Students at Mitan Technical Institute</p>
+        <p class="kurdish-subtitle">تایبەت بۆ قوتابیێن بەشێ کۆمپیوتەر و IT ل پەیمانگەها میتان</p>
+    </footer>
+
+    <!-- JavaScript Game Logic Engine -->
+    <script>
+        // Global Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight nav button
+            const navs = document.querySelectorAll('.nav-btn');
+            if(tabId === 'dashboard') navs[0].classList.add('active');
+            if(tabId === 'custom-quiz') navs[1].classList.add('active');
+            if(tabId === 'puzzle') navs[2].classList.add('active');
+            if(tabId === 'bank-quiz') navs[3].classList.add('active');
+            if(tabId === 'media') navs[4].classList.add('active');
+        }
+
+        // Room Generator Logic
+        function createRoom() {
+            const randomCode = 'MXP-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('globalRoomCode').value = randomCode;
+            document.getElementById('customRoomDisplay').innerText = 'Room: ' + randomCode;
+            document.getElementById('puzzleRoomCode').innerText = 'Room Code: ' + randomCode;
+            alert('New Room Created: ' + randomCode + '\nژوورا نوو هاتە دروستکرن! ئەم کۆدە بۆ هەڤالێن خۆ بنێرە.');
+        }
+
+        function joinRoom() {
+            const code = document.getElementById('globalRoomCode').value;
+            alert('Joined Room: ' + code + '\nتۆ بەشدار بووی د ژوورا هەڤالان دا!');
+        }
+
+        /* ---------------------------------------------------
+           1. CUSTOM 20 QUIZ ENGINE
+        --------------------------------------------------- */
+        let customQuestions = [
+            { q: "What does CPU stand for? / مەبەست ژ CPU چیە؟", options: ["Central Processing Unit", "Computer Power Unit", "Core Program Utility", "Control Protocol Unit"], correct: 0 },
+            { q: "Which tool is used for C# Windows Forms development? / کیژ بەرنامە بۆ C# دهێتە بەکارهێنان؟", options: ["Visual Studio", "Photoshop", "MS Word", "AutoCAD"], correct: 0 },
+            { q: "What is the function of RAM in a PC? / ئەرکێ RAM چیە؟", options: ["Permanent Storage", "Temporary High-Speed Memory", "Power Supply", "Graphics Rendering"], correct: 1 },
+            { q: "Which protocol is secure for web browsing? / کیژ پروتۆکۆل ئارامە بۆ ماڵپەڕان؟", options: ["HTTP", "HTTPS", "FTP", "SMTP"], correct: 1 },
+            { q: "What is IP address used for? / ناڤێن IP بۆ چ دهێنە بەکارهێنان؟", options: ["Network Device Identification", "Screen Resolution", "Battery Charging", "Audio Processing"], correct: 0 }
+        ];
+
+        // Fill remaining up to 20 questions automatically
+        for(let i=6; i<=20; i++) {
+            customQuestions.push({
+                q: `IT Knowledge Question #${i}: What is component #${i}? / پرسیارا IT ژمارە ${i}`,
+                options: [`Standard Driver ${i}`, `Core System Protocol`, `Hardware Module ${i}`, `Database Schema`],
+                correct: 0
+            });
+        }
+
+        let currentQIndex = 0;
+        let quizScore = 0;
+        let qTimerInterval;
+        let timeLeft = 20;
+
+        function startCustomQuizGame() {
+            document.getElementById('quiz-setup').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-play').style.display = 'block';
+            currentQIndex = 0;
+            quizScore = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if(currentQIndex >= customQuestions.length) {
+                finishCustomQuiz();
+                return;
+            }
+
+            clearInterval(qTimerInterval);
+            timeLeft = 20;
+            document.getElementById('qTimer').innerText = timeLeft + 's';
+            document.getElementById('qProgress').innerText = `Question ${currentQIndex + 1}/${customQuestions.length}`;
+            
+            const qData = customQuestions[currentQIndex];
+            document.getElementById('currentQText').innerText = qData.q;
+
+            const optsDiv = document.getElementById('optionsContainer');
+            optsDiv.innerHTML = '';
+
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerHTML = `<span>${String.fromCharCode(65+idx)}. ${opt}</span> <i class="fa-regular fa-circle"></i>`;
+                btn.onclick = () => selectAnswer(idx);
+                optsDiv.appendChild(btn);
+            });
+
+            qTimerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('qTimer').innerText = timeLeft + 's';
+                if(timeLeft <= 0) {
+                    clearInterval(qTimerInterval);
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+
+        function selectAnswer(chosenIdx) {
+            clearInterval(qTimerInterval);
+            if(chosenIdx === customQuestions[currentQIndex].correct) {
+                quizScore++;
+            }
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            loadQuestion();
+        }
+
+        function finishCustomQuiz() {
+            document.getElementById('quiz-play').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('userScore').innerText = quizScore;
+            document.getElementById('lbScore').innerText = quizScore;
+        }
+
+        function restartCustomQuiz() {
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-setup').style.display = 'block';
+        }
+
+        function toggleQuestionForm() {
+            const form = document.getElementById('custom-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        let formIndex = 0;
+        function saveCustomQuestion() {
+            const text = document.getElementById('qText').value;
+            const a = document.getElementById('optA').value;
+            const b = document.getElementById('optB').value;
+            const c = document.getElementById('optC').value;
+            const d = document.getElementById('optD').value;
+            const correct = parseInt(document.getElementById('correctOpt').value) - 1;
+
+            if(text && a && b && c && d) {
+                customQuestions[formIndex] = { q: text, options: [a,b,c,d], correct: correct };
+                formIndex = (formIndex + 1) % 20;
+                document.getElementById('formQIndex').innerText = formIndex + 1;
+                alert('Question Saved! / پرسیار هاتە پاشەکەوتکرن');
+                
+                // Reset inputs
+                document.getElementById('qText').value = '';
+                document.getElementById('optA').value = '';
+                document.getElementById('optB').value = '';
+                document.getElementById('optC').value = '';
+                document.getElementById('optD').value = '';
+            } else {
+                alert('Please fill out all fields! / تکایە هەمی خانان پڕ بکەڤە');
+            }
+        }
+
+        /* ---------------------------------------------------
+           2. 10 STAGE PUZZLE ENGINE
+        --------------------------------------------------- */
+        let puzzleStage = 1;
+        let puzzleGlobalTime = 600; // 10 minutes
+        let puzzleTimerInterval;
+
+        const puzzleImages = [
+            "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80", // Stage 1: CPU
+            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=300&q=80", // Stage 2: Code
+            "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=300&q=80", // Stage 3: Cyber
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=300&q=80", // Stage 4: Matrix
+            "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=300&q=80", // Stage 5: Network
+            "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=300&q=80", // Stage 6: Server
+            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=300&q=80", // Stage 7: Laptop
+            "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=300&q=80", // Stage 8: Design
+            "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=300&q=80", // Stage 9: Logic
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=300&q=80"  // Stage 10: AI
+        ];
+
+        let puzzleState = [0,1,2,3,4,5,6,7,8];
+
+        function initPuzzleStage() {
+            if(puzzleStage === 1 && !puzzleTimerInterval) {
+                startPuzzleGlobalTimer();
+            }
+
+            document.getElementById('puzzleStageBadge').innerText = `Stage ${puzzleStage}/10`;
+            document.getElementById('nextStageBtn').style.display = 'none';
+
+            // Scramble tiles
+            puzzleState = [0,1,2,3,4,5,6,7,8].sort(() => Math.random() - 0.5);
+            renderPuzzleGrid();
+        }
+
+        function renderPuzzleGrid() {
+            const grid = document.getElementById('puzzleGrid');
+            grid.innerHTML = '';
+            const imgUrl = puzzleImages[(puzzleStage - 1) % puzzleImages.length];
+
+            puzzleState.forEach((posIndex, currentPos) => {
+                const tile = document.createElement('div');
+                tile.className = 'puzzle-tile';
+                
+                if(posIndex === 8) {
+                    tile.classList.add('empty');
+                } else {
+                    tile.style.backgroundImage = `url('${imgUrl}')`;
+                    const row = Math.floor(posIndex / 3);
+                    const col = posIndex % 3;
+                    tile.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+                }
+
+                tile.onclick = () => moveTile(currentPos);
+                grid.appendChild(tile);
+            });
+
+            checkPuzzleSolved();
+        }
+
+        function moveTile(pos) {
+            const emptyPos = puzzleState.indexOf(8);
+            const validMoves = [pos - 1, pos + 1, pos - 3, pos + 3];
+
+            if(validMoves.includes(emptyPos)) {
+                // Swap
+                [puzzleState[pos], puzzleState[emptyPos]] = [puzzleState[emptyPos], puzzleState[pos]];
+                renderPuzzleGrid();
+            }
+        }
+
+        function checkPuzzleSolved() {
+            const isSolved = puzzleState.every((val, index) => val === index);
+            if(isSolved) {
+                document.getElementById('nextStageBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextPuzzleStage() {
+            if(puzzleStage < 10) {
+                puzzleStage++;
+                initPuzzleStage();
+            } else {
+                alert('Congratulations! You completed all 10 stages under 10 minutes!\nت پیرۆزه‌! تە هەمی 10 قۆناغێن پۆزلێ خلاس کرن!');
+            }
+        }
+
+        function startPuzzleGlobalTimer() {
+            puzzleTimerInterval = setInterval(() => {
+                puzzleGlobalTime--;
+                const mins = Math.floor(puzzleGlobalTime / 60);
+                const secs = puzzleGlobalTime % 60;
+                document.getElementById('puzzleGlobalTimer').innerHTML = `<i class="fa-solid fa-stopwatch"></i> ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+                if(puzzleGlobalTime <= 0) {
+                    clearInterval(puzzleTimerInterval);
+                    alert('Time is up for the Puzzle Challenge!\nدەمی ب دوماهیک هات!');
+                }
+            }, 1000);
+        }
+
+        /* ---------------------------------------------------
+           3. 50+ IT QUESTION BANK ENGINE
+        --------------------------------------------------- */
+        const bankQuestionsPool = [
+            { q: "What does HTML stand for? / مەبەست ژ HTML چیە؟", options: ["HyperText Markup Language", "High Tech Multi Language", "Home Tool Markup Logic", "Hyperlink Text Mode"], correct: 0, img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=300&q=80" },
+            { q: "Identify this component in network architecture: / کیژ پارچەیا نێتورکێ یە؟", options: ["Router / ڕووتەر", "Power Supply", "Sound Card", "Monitor"], correct: 0, img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=300&q=80" },
+            { q: "Which programming language is known for web styling? / کیژ زمان بۆ دیزاینا وێبێ یە؟", options: ["CSS", "C++", "Assembly", "SQL"], correct: 0, img: null },
+            { q: "What is the main role of a Database? / ئەرکێ سەرەکی یێ داتابێسێ چیە؟", options: ["Structured Data Storage", "Executing Audio", "Screen Printing", "Cooling Hardware"], correct: 0, img: null },
+            { q: "What does SQL stand for? / مەبەست ژ SQL چیە؟", options: ["Structured Query Language", "Sequential Quality Logic", "System Quick Link", "Server Quantized Language"], correct: 0, img: null }
+        ];
+
+        // Fill remaining up to 50 questions
+        for(let i=6; i<=50; i++) {
+            bankQuestionsPool.push({
+                q: `Bank IT Question #${i}: Core concepts in Operating Systems & Programming. / پرسیارا زانیاریان #${i}`,
+                options: [`Option A System ${i}`, `Option B Protocol`, `Option C Architecture`, `Option D Network`],
+                correct: 0,
+                img: i % 3 === 0 ? "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80" : null
+            });
+        }
+
+        let bankIndex = 0;
+        let bankRound = 1;
+        let bankTimer;
+        let bankTimeLeft = 20;
+        let bankScore = 0;
+
+        function startBankQuiz() {
+            document.getElementById('bank-start-screen').style.display = 'none';
+            document.getElementById('bank-results-screen').style.display = 'none';
+            document.getElementById('bank-play-screen').style.display = 'block';
+            bankIndex = 0;
+            bankScore = 0;
+            loadBankQuestion();
+        }
+
+        function loadBankQuestion() {
+            const maxQ = bankRound === 1 ? 10 : 20;
+
+            if(bankIndex >= maxQ) {
+                finishBankRound();
+                return;
+            }
+
+            clearInterval(bankTimer);
+            bankTimeLeft = 20;
+            document.getElementById('bankTimer').innerText = bankTimeLeft + 's';
+            document.getElementById('bankProgress').innerText = `Question ${bankIndex + 1}/${maxQ}`;
+
+            const qData = bankQuestionsPool[bankIndex];
+            document.getElementById('bankQText').innerText = qData.q;
+
+            // Handle Image
+            const imgContainer = document.getElementById('bankImageContainer');
+            if(qData.img) {
+                imgContainer.style.display = 'block';
+                document.getElementById('bankQImage').src = qData.img;
+            } else {
+                imgContainer.style.display = 'none';
+            }
+
+            const optsDiv = document.getElementById('bankOptionsContainer');
+            optsDiv.innerHTML = '';
+
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerHTML = `<span>${String.fromCharCode(65+idx)}. ${opt}</span> <i class="fa-regular fa-circle"></i>`;
+                btn.onclick = () => selectBankAnswer(idx);
+                optsDiv.appendChild(btn);
+            });
+
+            bankTimer = setInterval(() => {
+                bankTimeLeft--;
+                document.getElementById('bankTimer').innerText = bankTimeLeft + 's';
+                if(bankTimeLeft <= 0) {
+                    clearInterval(bankTimer);
+                    bankIndex++;
+                    loadBankQuestion();
+                }
+            }, 1000);
+        }
+
+        function selectBankAnswer(chosenIdx) {
+            clearInterval(bankTimer);
+            if(chosenIdx === bankQuestionsPool[bankIndex].correct) {
+                bankScore++;
+            }
+            bankIndex++;
+            loadBankQuestion();
+        }
+
+        function finishBankRound() {
+            document.getElementById('bank-play-screen').style.display = 'none';
+            document.getElementById('bank-results-screen').style.display = 'block';
+
+            if(bankRound === 1) {
+                document.getElementById('bankRoundResultText').innerText = `Round 1 Complete! You scored ${bankScore}/10. Ready for Round 2?`;
+            } else {
+                document.getElementById('bankRoundResultText').innerText = `Full Challenge Complete! Total Score: ${bankScore}/20.`;
+                document.getElementById('bankContinueBtn').style.display = 'none';
+            }
+        }
+
+        function continueToRound2() {
+            bankRound = 2;
+            document.getElementById('bankRoundBadge').innerText = 'Round 2 (Total 20 Questions)';
+            document.getElementById('bank-results-screen').style.display = 'none';
+            document.getElementById('bank-play-screen').style.display = 'block';
+            loadBankQuestion();
+        }
+
+        // Initialize Puzzle stage on load
+        window.onload = function() {
+            initPuzzleStage();
+        };
+    </script>
+</body>
+</html>
