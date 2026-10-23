@@ -1,4 +1,4 @@
-[10/23/2026 8:05 PM] ❤️‍🩹🖤🐯: loadQuiz();
+loadQuiz();
         }, 1300);
     };
 
@@ -7,7 +7,7 @@
 }
 function restartQuiz() { currentQ = 0; score = 0; loadQuiz(); }
 document.addEventListener("DOMContentLoaded", function() { loadQuiz(); });
-[10/23/2026 8:05 PM] ❤️‍🩹🖤🐯: const quizData = [ { questionEn: "What does CPU stand for?", questionKu: "واتایا پەیڤا CPU چییە؟", image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=500", options: [ "Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Control Processing Unit" ], correct: 0 }, { questionEn: "Which of the following is an Operating System?", questionKu: "کیش ژ ڤان سیستەمێ کارپێکرنێ یە (Operating System)؟", image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=500", options: ["HTML", "Windows 11", "HTTP", "CPU"], correct: 1 }, { questionEn: "What is the main function of RAM?", questionKu: "ئەرکێ سەرەکیی یێ زاکیرەیا RAM چییە؟", image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=500", options: [ "Permanent Storage (خەزنکرنا دەوامی)", "Temporary Memory (زاکیرەیا کاتی)", "Power Supply (دابینکرنا کارەبێ)", "Internet Connection (ئینتەرنێت)" ], correct: 1 } ];
+const quizData = [ { questionEn: "What does CPU stand for?", questionKu: "واتایا پەیڤا CPU چییە؟", image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=500", options: [ "Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Control Processing Unit" ], correct: 0 }, { questionEn: "Which of the following is an Operating System?", questionKu: "کیش ژ ڤان سیستەمێ کارپێکرنێ یە (Operating System)؟", image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=500", options: ["HTML", "Windows 11", "HTTP", "CPU"], correct: 1 }, { questionEn: "What is the main function of RAM?", questionKu: "ئەرکێ سەرەکیی یێ زاکیرەیا RAM چییە؟", image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=500", options: [ "Permanent Storage (خەزنکرنا دەوامی)", "Temporary Memory (زاکیرەیا کاتی)", "Power Supply (دابینکرنا کارەبێ)", "Internet Connection (ئینتەرنێت)" ], correct: 1 } ];
 let currentQ = 0; let score = 0; let answered = false;
 function loadQuiz() { answered = false; const qImg = document.getElementById('q-img'); const qTextEn = document.getElementById('q-text-en'); const qTextKu = document.getElementById('q-text-ku'); const optionsGrid = document.getElementById('options-grid'); const progress = document.getElementById('quiz-progress');
 if (!optionsGrid) return;
