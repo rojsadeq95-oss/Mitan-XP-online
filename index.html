@@ -1,155 +1,63 @@
-<header class="app-header" style="display:flex; align-items:center; gap:15px; padding:15px; background:rgba(10,15,29,0.8); border-bottom:2px solid #00f2fe;">
-    <img src="icon.svg" alt="MitanXP Logo" style="width:50px; height:50px; border-radius:10px;">
-    <div>
-        <h1 style="margin:0; font-size:1.6rem; color:#fff;">Mitan<span style="color:#ffc107;">XP</span></h1>
-        <div style="color:#00f2fe; font-size:0.9rem; font-weight:bold;">پەیمانگەها میتان - بەشا کومپیوتەر و IT</div>
-        <div style="color:#9ca3af; font-size:0.8rem;">Mitan Institute - Computer & IT Department</div>
-    </div>
-</header>
-<link rel="stylesheet" href="style.css">
-<!-- Navigation Cards with Dual Language (Kurdish & English) -->
-<nav class="nav-cards-grid">
-    <div class="nav-card blue-card active" onclick="switchTab('quiz-tab', this)">
-        <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
-        <div class="card-title">Quiz Game <span class="sub-tr">یاریا زانیاریان</span></div>
-        <div class="card-sub">Test your knowledge in IT <br> تاقیکرنا زانیاریێن ئایتی (20 پرسیار)</div>
-        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
+<!-- مێنیوی سەرەکی -->
+<main class="menu-grid" id="main-menu">
+    <div class="card" onclick="startQuiz()">
+        <div class="icon"><i class="fa-solid fa-brain" style="color: #00d2ff;"></i></div>
+        <h2>Quiz Game</h2>
+        <p>یاری زانیاری</p>
+        <p class="eng">Test your knowledge in IT</p>
     </div>
 
-    <div class="nav-card purple-card" onclick="switchTab('puzzle-tab', this)">
-        <div class="card-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
-        <div class="card-title">Puzzle Game <span class="sub-tr">یاریا پۆزلێ</span></div>
-        <div class="card-sub">Solve the puzzle in 10 stages <br> 10 مەرحلە د 10 خولەکان دا</div>
-        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
+    <div class="card" onclick="startPuzzle()">
+        <div class="icon"><i class="fa-solid fa-puzzle-piece" style="color: #a855f7;"></i></div>
+        <h2>Puzzle Game</h2>
+        <p>یاری پازڵ</p>
+        <p class="eng">Solve the puzzle in 10 stages</p>
     </div>
 
-    <div class="nav-card green-card" onclick="switchTab('room-tab', this)">
-        <div class="card-icon"><i class="fa-solid fa-users"></i></div>
-        <div class="card-title">Create Room <span class="sub-tr">دروستکرنا ژوورێ</span></div>
-        <div class="card-sub">Play with your friends via code <br> بەشداربوونا هەڤالان ب کۆدی</div>
-        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
+    <div class="card" onclick="createRoom()">
+        <div class="icon"><i class="fa-solid fa-users" style="color: #22c55e;"></i></div>
+        <h2>Create Room</h2>
+        <p>دروستکرنا ژوورێ</p>
+        <p class="eng">Play with your friends via code</p>
     </div>
 
-    <div class="nav-card gold-card" onclick="switchTab('gallery-tab', this)">
-        <div class="card-icon"><i class="fa-solid fa-images"></i></div>
-        <div class="card-title">IT Images <span class="sub-tr">وێنە و ڤیدیۆیێن IT</span></div>
-        <div class="card-sub">Explore IT concepts & videos <br> شرۆڤەکرن ب کوردییا بادینی</div>
-        <div class="card-arrow"><i class="fa-solid fa-arrow-left"></i></div>
+    <div class="card" onclick="showITImages()">
+        <div class="icon"><i class="fa-solid fa-image" style="color: #f59e0b;"></i></div>
+        <h2>IT Images</h2>
+        <p>وێنێت IT</p>
+        <p class="eng">Explore IT concepts & videos</p>
     </div>
-</nav>
+</main>
 
-<!-- Quiz Tab -->
-<section id="quiz-tab" class="tab-content active">
-    <div class="code-join-bar">
-        <span><i class="fa-solid fa-key"></i> کۆدێ ژوورێ بۆ هەڤالان / Enter Room Code:</span>
-        <input type="text" id="quiz-room-code" placeholder="کۆدی بنڤیسە (Enter code)...">
-        <button class="btn-action" onclick="joinQuizCode()">تێکەڵبوون / Join</button>
-    </div>
-
-    <div class="game-box">
-        <div class="game-meta">
-            <span class="timer-badge">⏱️ کات / Time: <b id="quiz-timer">20</b>s</span>
-            <span class="progress-badge">📊 پرسیار / Question: <b id="quiz-progress">1 / 20</b></span>
+<!-- بەشی یارییەکان (سەرەتا شاردەرەوەیە) -->
+<section id="game-container" class="hidden">
+    <button onclick="goHome()" class="back-btn"><i class="fa-solid fa-arrow-right"></i> گەڕانەوە بۆ سەرەکی</button>
+    
+    <!-- یاری زانیاری (Quiz) -->
+    <div id="quiz-section" class="hidden">
+        <div class="quiz-header">
+            <span id="question-counter">Question: 1/20</span>
+            <span id="timer">⏱ Time: 20s</span>
         </div>
-
-        <div id="quiz-card-body">
-            <img id="q-img" src="" alt="IT Image" class="quiz-media-img">
-            <h3 id="q-text-en">Loading...</h3>
-            <h4 id="q-text-ku">لێدانا پرسیارێ...</h4>
-
-            <div id="options-grid" class="options-2x2"></div>
+        <h2 id="question-text">پرسیار لێرە دێت...</h2>
+        <div id="options-container" class="options-grid">
+            <!-- هەڵبژاردەکان لێرە دێن -->
         </div>
+    </div>
 
-        <div id="quiz-result-screen" style="display: none;" class="result-box">
-            <h2>🎉 یاری ب دوماهیک هات! / Quiz Completed!</h2>
-            <div class="final-score" id="final-score-text">0 / 20</div>
-            <button class="btn-action" onclick="restartQuiz()">دووبارە دەستپێبکەڤە / Play Again</button>
+    <!-- بەشی وێنەکانی IT -->
+    <div id="it-images-section" class="hidden">
+        <h2 style="color: #ffcc00; margin-bottom: 20px; text-align: center;">زانیارییەکانی IT بە وێنە</h2>
+        <div class="images-grid">
+            <!-- وێنەی یەکەم -->
+            <div class="image-card">
+                <img src="images/1.png" alt="IT Image" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'">
+                <h3>CPU (Central Processing Unit)</h3>
+                <p>مێشکی کۆمپیوتەرە کە هەموو کردارەکان جێبەجێ دەکات.</p>
+            </div>
+            <!-- دەتوانیت وێنەی تر لێرە زیاد بکەیت بە هەمان شێوە -->
         </div>
     </div>
 </section>
 
-<!-- Puzzle Tab -->
-<section id="puzzle-tab" class="tab-content">
-    <div class="code-join-bar">
-        <span><i class="fa-solid fa-gamepad"></i> کۆدێ پۆزلا هەڤالان / Puzzle Room Code:</span>
-        <input type="text" id="puzzle-room-code" placeholder="کۆدێ پۆزلێ بنڤیسە...">
-        <button class="btn-action" onclick="joinPuzzleCode()">بەشداربوون / Join</button>
-    </div>
-
-    <div class="puzzle-container-card">
-        <div class="puzzle-status">
-            <span>مەرحلە / Stage: <b id="puzzle-stage-num">1 / 10</b></span>
-            <span>کاتی گشتی / Time: <b id="puzzle-clock">10:00</b></span>
-        </div>
-        <div class="puzzle-grid-board" id="puzzle-board"></div>
-        <button class="btn-action" onclick="nextPuzzleStage()">مەرحەلا پاشتر / Next Stage ➡️</button>
-    </div>
-</section>
-
-<!-- Create Room Tab -->
-<section id="room-tab" class="tab-content">
-<div class="create-room-box" style="background:var(--panel-bg); padding:25px; border-radius:15px; text-align:left;">
-        <h3 style="color:var(--gold); margin-bottom:10px;"><i class="fa-solid fa-plus-circle"></i> دروستکرنا ژوورا ڕکابەریێ / Create Multiplayer Room</h3>
-        <p style="color:var(--text-muted); margin-bottom:15px;">کۆدەکێ تایبەت بنڤیسە دا هەڤالێن تە ژ مۆبایلێن خۆ ب هەمەهەنگی تێکەڵی یاریێ ببن:</p>
-        <div class="room-setup-form" style="display:flex; gap:10px;">
-            <input type="text" id="new-room-id" placeholder="نموونە: MITAN-XP-2026" style="flex:1; padding:12px; border-radius:8px; background:#0a0f1d; border:1px solid #374151; color:#fff;">
-            <button class="btn-action" onclick="generateRoomCode()">دروستکرن / Create</button>
-        </div>
-        <div id="room-created-info" class="room-created-notice" style="display: none; margin-top:15px; padding:12px; background:rgba(0,242,254,0.1); border:1px solid var(--cyan-neon); border-radius:8px;"></div>
-    </div>
-</section>
-
-<!-- IT Gallery & Videos Tab -->
-<section id="gallery-tab" class="tab-content">
-    <div class="gallery-topics-grid">
-        <div class="topic-card">
-            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" alt="Software Engineering">
-            <div class="topic-info">
-                <h3>Software Engineering <span class="sub-tr">ئەندازیاریا بڕۆگرامسازیێ</span></h3>
-                <p class="ku-desc">دروستکرنا ئەپلیکەیشن و سیستەمان ب ڕێکا کۆد و زمانێن بەرنامەسازیێ بۆ خزمەتکرنا جڤاکی.</p>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/kqtD5dpn9C8" title="Software Video" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <div class="topic-card">
-            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600" alt="Networks">
-            <div class="topic-info">
-                <h3>Computer Networks <span class="sub-tr">تۆڕێن کۆمپیوتەری</span></h3>
-                <p class="ku-desc">گرێدانا کۆمپیوتەر و ئامێران ب ئێک ڤە بۆ ئاڵوگۆڕکرنا زانیاریان و پێکڤە گەهشتنێ.</p>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/QKjcHYnQ3g4" title="Networks Video" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <div class="topic-card">
-            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600" alt="Cyber Security">
-            <div class="topic-info">
-                <h3>Cyber Security <span class="sub-tr">سایبەر سیکیوریتی و پاراستن</span></h3>
-                <p class="ku-desc">پاراستنا سیستم، زانیاری و تۆڕێن کۆمپیوتەری ژ هێرشێن ئەلیکترۆنی و دزینا داتایان.</p>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/inWWhr5tnEA" title="Security Video" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <div class="topic-card">
-            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" alt="Artificial Intelligence">
-            <div class="topic-info">
-                <h3>Artificial Intelligence <span class="sub-tr">ژیرییا دەستکرد</span></h3>
-                <p class="ku-desc">پەرەپێدانا مەکینەیان دا شیان هەبن وەک مرۆڤی هزڕ بکەن و بڕیاران بدەن.</p>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/2ePf9rueIbo" title="AI Video" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<div id="quiz-result-screen" style="display: none; text-align: center; padding: 30px; background: rgba(17, 24, 39, 0.9); border: 1px solid #ffc107; border-radius: 12px; max-width: 600px; margin: 20px auto;">
-    <h2 style="color: #ffc107;">ئەنجامێ تاقیکردنێ / Quiz Result</h2>
-    <p id="final-score-text" style="font-size: 1.5rem; color: #fff; margin: 20px 0;"></p>
-    <button onclick="restartQuiz()" style="padding: 10px 20px; background: #00f2fe; border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer;">دووبارە دەستپێکرن / Restart</button>
-</div>
 <script src="app.js"></script>
