@@ -1,30 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="512" height="512">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e3a8a" />
-      <stop offset="100%" stop-color="#0a0f1d" />
+    <!-- باکگراوندا شینا تۆخ -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0F1B2B"/>
+      <stop offset="100%" stop-color="#05080F"/>
+    </radialGradient>
+
+    <!-- ڕەنگێ شین بۆ پڕیا سەرەکی یا M -->
+    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5CD5FF"/>
+      <stop offset="50%" stop-color="#1A8CFF"/>
+      <stop offset="100%" stop-color="#0052B3"/>
     </linearGradient>
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#f59e0b" />
-      <stop offset="100%" stop-color="#fbbf24" />
+
+    <!-- ڕەنگێ زێڕی بۆ بنێ M و جەمکێ -->
+    <linearGradient id="goldGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFE57F"/>
+      <stop offset="50%" stop-color="#FFB300"/>
+      <stop offset="100%" stop-color="#FF6F00"/>
     </linearGradient>
+
+    <!-- کاریگەرییا درەوشانەڤەیێ (Neon Glow) -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
   </defs>
 
-  <!-- Background Card -->
-  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" stroke="#00f2fe" stroke-width="6" />
+  <!-- چوارچۆڤێ باکگراوندێ -->
+  <rect width="100%" height="100%" fill="url(#bgGlow)" rx="90"/>
 
-  <!-- Graduation Cap -->
-  <g transform="translate(256, 175) scale(1.1)">
-    <polygon points="0,-45 100,0 0,45 -100,0" fill="#00f2fe" />
-    <polygon points="0,-45 100,0 0,45 -100,0" fill="none" stroke="#ffffff" stroke-width="3" />
-    <path d="M-60,25 L-60,70 C-60,90 60,90 60,70 L60,25" fill="none" stroke="url(#goldGrad)" stroke-width="12" stroke-linecap="round" />
-    <path d="M70,10 L105,35 L105,72" fill="none" stroke="url(#goldGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
-    <circle cx="105" cy="78" r="6" fill="#f59e0b" />
+  <!-- هێڵا چوارچۆڤێ دەرەکی (شین و زێڕی) -->
+  <rect x="25" y="25" width="450" height="450" rx="80" fill="none" stroke="#1A8CFF" stroke-width="4" opacity="0.6" filter="url(#glow)"/>
+  <rect x="25" y="25" width="450" height="450" rx="80" fill="none" stroke="#FFB300" stroke-width="2" opacity="0.4" stroke-dasharray="150 300"/>
+
+  <!-- جەمکا زێڕی ل سەرێ M -->
+  <circle cx="250" cy="120" r="38" fill="url(#goldGlow)" filter="url(#glow)"/>
+
+  <!-- شێوەیێ M (تێکەڵا شین و زێڕی) -->
+  <g filter="url(#glow)">
+    <!-- بەشێ زێڕی یێ ژێرێ لایێن M -->
+    <path d="M120 220 L120 380 Q120 400 140 390 L180 340 L180 260 Z" fill="url(#goldGlow)" />
+    <path d="M380 220 L380 380 Q380 400 360 390 L320 340 L320 260 Z" fill="url(#goldGlow)" />
+
+    <!-- لایێ چەپێ یێ سەرەکی M -->
+    <path d="M110 200 Q100 200 115 220 L250 340 L180 260 L130 205 Z" fill="url(#blueGlow)" />
+    
+    <!-- لایێ ڕاستێ یێ سەرەکی M -->
+    <path d="M390 200 Q400 200 385 220 L250 340 L320 260 L370 205 Z" fill="url(#blueGlow)" />
+
+    <!-- تاجێ شین یێ سەرەوە yێ M -->
+    <path d="M110 200 L250 310 L390 200 L370 180 L250 270 L130 180 Z" fill="url(#blueGlow)" />
   </g>
-
-  <!-- App Name MitanXP -->
-  <text x="256" y="350" font-family="Segoe UI, Tahoma, sans-serif" font-size="52" font-weight="900" fill="#ffffff" text-anchor="middle">Mitan<tspan fill="#ffc107">XP</tspan></text>
-  
-  <!-- Subtitle -->
-  <text x="256" y="400" font-family="Segoe UI, Tahoma, sans-serif" font-size="20" font-weight="bold" fill="#00f2fe" text-anchor="middle" letter-spacing="3">IT PLATFORM</text>
 </svg>
